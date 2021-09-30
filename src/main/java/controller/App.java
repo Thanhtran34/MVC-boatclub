@@ -16,5 +16,8 @@ public class App {
     view.Simple v = new view.Simple();
 
     c.doSomethingSimple(m, v);
+    // model.domain.Member m1 = new model.domain.Member("mary", 12345678);
+    // model.persistence.FileHandler fil = new model.persistence.FileHandler();
+    // fil.saveMember(m1);
   }
 }

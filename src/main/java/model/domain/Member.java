@@ -1,27 +1,24 @@
-package model;
+package model.domain;
 
 import java.util.LinkedList;
-/**
- * Module for the Member class.
- *
- */
 
+/** Module for the Member class. */
 public class Member {
 
   private String name;
   private Long personalNumber;
   private String memberId;
-  private LinkedList<Boat> boatList = new LinkedList<>();
+  private LinkedList<Boat> boatList = new LinkedList<Boat>();
 
   /**
    * An instance of Member class.
    *
    * @param name {string}
-   * @param personalNumber {long}
+   * @param personnumber {long}
    */
-  public Member(String name, Long personalNumber) {
+  public Member(String name, long personnumber) {
     this.name = name;
-    this.personalNumber = personalNumber;
+    this.personalNumber = personnumber;
     // create userId with the current time in milliseconds.
     long id = System.currentTimeMillis();
     // change long to string
