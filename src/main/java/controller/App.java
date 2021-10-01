@@ -16,8 +16,16 @@ public class App {
     view.Simple v = new view.Simple();
 
     c.doSomethingSimple(m, v);
-    // model.domain.Member m1 = new model.domain.Member("mary", 12345678);
+    view.ConsoleUi cl = new view.ConsoleUi();
+    cl.showWelcomeMessage();
+    // model.domain.Member m1 = new model.domain.Member("mary", 1234567822);
+    // model.domain.Member m2 = new model.domain.Member("john", 1234523599);
     // model.persistence.FileHandler fil = new model.persistence.FileHandler();
     // fil.saveMember(m1);
+    // fil.saveMember(m2);
+    // model.persistence.MemberList mlist = new model.persistence.MemberList();
+    // mlist = fil.checkAllMembers();
+    // System.out.println(mlist.getMemberList().toString());
+    
   }
 }

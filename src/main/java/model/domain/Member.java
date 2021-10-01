@@ -1,6 +1,7 @@
 package model.domain;
 
 import java.util.LinkedList;
+import java.util.UUID;
 
 /** Module for the Member class. */
 public class Member {
@@ -11,21 +12,23 @@ public class Member {
   private LinkedList<Boat> boatList = new LinkedList<Boat>();
 
   /**
+   * An default instance of Member class.
+   *
+   */
+  public Member() {}
+
+  /**
    * An instance of Member class.
    *
-   * @param name {string}
-   * @param personnumber {long}
+   * @param name {string} - name of member.
+   * @param personnumber {long} - personal number of member.
    */
   public Member(String name, long personnumber) {
     this.name = name;
     this.personalNumber = personnumber;
-    // create userId with the current time in milliseconds.
-    long id = System.currentTimeMillis();
-    // change long to string
-    String num = Long.toString(id);
-    // take only 6 characters/digit for id itself
-    num = num.substring(1, 7);
-    setMemberId(num);
+    // create unique id with 6 characters
+    UUID id = UUID.randomUUID();
+    this.memberId = id.toString().substring(0, 6);
   }
 
   public String getName() {
@@ -38,10 +41,6 @@ public class Member {
 
   public Long getPersonalNumber() {
     return personalNumber;
-  }
-
-  public void setMemberId(String memberId) {
-    this.memberId = memberId;
   }
 
   public LinkedList<Boat> getBoats() {
@@ -59,7 +58,7 @@ public class Member {
   /**
    * Method to add the boat.
    *
-   * @param b {*}
+   * @param b {*} - Boat owned by member.
    */
   public void addBoat(Boat b) {
     this.boatList.add(b);
@@ -68,7 +67,7 @@ public class Member {
   /**
    * Method to remove the boat.
    *
-   * @param b {*}
+   * @param b {*} - Boat removed by member.
    */
   public void removeBoat(Boat b) {
     for (int i = 0; i < this.boatList.size(); i++) {
