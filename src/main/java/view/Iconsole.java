@@ -6,7 +6,7 @@ public interface Iconsole {
 
   public void showMainMenu();
 
-  public void displayFailMessage();
+  public void showFailMessage();
 
   public void createMember();
 
@@ -15,6 +15,10 @@ public interface Iconsole {
   public void viewOneMember();
 
   public void listMembers();
+
+  public void showCompactList();
+
+  public void showVerboseList();
 
   public void deleteMember();
 
@@ -28,7 +32,7 @@ public interface Iconsole {
 
   public String readUserInput();
 
-  public int readInput();
+  public int readInputInt();
 
   public void displayError(String error);
 
@@ -36,23 +40,23 @@ public interface Iconsole {
 
   public void noMembers();
 
-  public void operationFailed();
+  public void proceedFail();
 
-  public void operationOk();
+  public void proceedSucessful();
 
   public void duplicateInformation();
 
-  public void selectBoat();
+  public void chooseBoat();
 
-  public void selectName();
+  public void chooseName();
 
-  public void selectPersonalNo();
+  public void choosePersonalNo();
 
-  public void selectMemberId();
+  public void chooseMemberId();
 
-  public void selectBoatType();
+  public void chooseBoatType();
 
-  public void selectBoatLength();
+  public void chooseBoatLength();
 
   public void noBoats();
 }

@@ -1,6 +1,7 @@
 package model.persistence;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import model.domain.Member;
 
@@ -16,8 +17,8 @@ public class MemberList {
     this.memberList = memberList;
   }
 
-  public List<Member> getMemberList() {
-    return memberList;
+  public Iterator<Member> getMemberList() {
+    return memberList.iterator();
   }
 
   public void setMemberList(List<Member> memberList) {

@@ -1,19 +1,34 @@
 package view;
 
+import model.domain.Boat;
+import model.domain.Member;
+import model.persistence.MemberList;
+import java.util.Iterator;
 import java.util.Scanner;
 
 /** Module for the ConsoleUi class. */
 public class ConsoleUi implements Iconsole {
-  private Scanner scan = new Scanner(System.in);
+  private Scanner scan;
+  private Member member;
+  private MemberList listmember;
+  private Boat boat;
+
+  public ConsoleUi() {
+    scan = new Scanner(System.in);
+  }
 
   @Override
   public void showWelcomeMessage() {
-    System.out.println("|____________________________________________________________________________________________|");
-    System.out.println("|                                                                                            |");
+    System.out.println(
+        "|____________________________________________________________________________________________|");
+    System.out.println(
+        "|                                                                                            |");
     System.out.println(
         "|**************************** Welcome to YatchClub ⛵ ⛵ ⛵  **********************************|");
-    System.out.println("|                                                                                            |");
-    System.out.println("|____________________________________________________________________________________________|");
+    System.out.println(
+        "|                                                                                            |");
+    System.out.println(
+        "|____________________________________________________________________________________________|");
   }
 
   @Override
@@ -31,13 +46,13 @@ public class ConsoleUi implements Iconsole {
     System.out.println("7. Update boat information\n");
     System.out.println("8. Delete boat");
     System.out.println("------------------------");
-    System.out.println("0. Quit\n");
+    System.out.println("-1. Quit\n");
     System.out.println("------------------------");
     System.out.print("Enter your choice and press enter:\n");
   }
 
   @Override
-  public void displayFailMessage() {
+  public void showFailMessage() {
     System.out.println("Oops, something went wrong with your choice. Please try again!");
   }
 
@@ -62,6 +77,51 @@ public class ConsoleUi implements Iconsole {
     System.out.println("1. Compact list");
     System.out.println("2. Verbose List");
     System.out.print("Enter your choice and press enter:\n");
+  }
+
+  @Override
+  public void showCompactList() {
+    Iterator<Member> membersList = listmember.getMemberList();
+    StringBuffer compactList = new StringBuffer();
+    System.out.println(
+        "--------------------------Compact List of  all members----------------------------\n");
+    while (membersList.hasNext()) {
+      Member member = membersList.next();
+
+      compactList.append("Member Id: " + member.getMemberId() + " | ");
+      compactList.append("Name: " + member.getName() + " | ");
+      compactList.append("Amount of Boats: " + member.getAmountOfBoats() + " | ");
+      compactList.append("\n");
+    }
+
+    System.out.println(compactList.toString());
+  }
+
+  @Override
+  public void showVerboseList() {
+    Iterator<Member> membersList = listmember.getMemberList();
+    StringBuffer verboseList = new StringBuffer();
+    System.out.println(
+        "-------------------------------Verbose List of all members-------------------------------\n");
+    while (membersList.hasNext()) {
+      Member member = membersList.next();
+      verboseList.append("Member Id: " + member.getMemberId() + " | ");
+      verboseList.append("Name: " + member.getName() + " | ");
+      verboseList.append("Personal Number: " + member.getPersonalNumber() + " | ");
+      verboseList.append("Amount of Boats: " + member.getAmountOfBoats() + " | ");
+      verboseList.append("\n");
+      int i = 1;
+      Iterator<Boat> boatsList = member.getBoatList();
+      while (boatsList.hasNext()) {
+        Boat boat = boatsList.next();
+        verboseList.append(i++);
+        verboseList.append("\t Type of Boat: " + boat.getType() + " | ");
+        verboseList.append("\t Length of Boat: " + boat.getLength() + " ft");
+        verboseList.append("\n");
+      }
+      verboseList.append("\n");
+    }
+    System.out.println(verboseList.toString());
   }
 
   @Override
@@ -100,42 +160,58 @@ public class ConsoleUi implements Iconsole {
   }
 
   @Override
-  public int readInput() {
-    return scan.nextInt();
+  public int readInputInt() {
+    try {
+      return Integer.parseInt(this.readUserInput());
+    } catch (NumberFormatException e) {
+      return 0;
+    }
   }
 
   @Override
-  public void printMessage(String message) {}
+  public void printMessage(String message) {
+    System.out.println(message);
+  }
 
   @Override
   public void noMembers() {}
 
   @Override
-  public void operationFailed() {}
+  public void proceedFail() {
+    System.out.println("Action is completed! please try again");
+  }
 
   @Override
-  public void operationOk() {}
+  public void proceedSucessful() {
+    System.out.println("Action completed!");
+  }
 
   @Override
   public void duplicateInformation() {}
 
   @Override
-  public void selectBoat() {}
+  public void chooseBoat() {}
 
   @Override
-  public void selectName() {}
+  public void chooseName() {
+    System.out.println("Please enter your name: ");
+  }
 
   @Override
-  public void selectPersonalNo() {}
+  public void choosePersonalNo() {
+    System.out.println("Please enter your personal number (Format: YYYYMMDDXXXX): ");
+  }
 
   @Override
-  public void selectMemberId() {}
+  public void chooseMemberId() {
+    System.out.println("Please specify your memberID: ");
+  }
 
   @Override
-  public void selectBoatType() {}
+  public void chooseBoatType() {}
 
   @Override
-  public void selectBoatLength() {}
+  public void chooseBoatLength() {}
 
   @Override
   public void noBoats() {}

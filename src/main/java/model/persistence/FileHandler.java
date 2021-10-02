@@ -10,7 +10,7 @@ import model.domain.Member;
 /** Module for the FileHandler class. */
 public class FileHandler implements Idatastorage {
   private String fileName = "MemberData.json";
-  private ArrayList<Member> thelist = new ArrayList<Member>();
+  private MemberList listmember;
 
   @Override
   public MemberList checkAllMembers() {
@@ -27,11 +27,9 @@ public class FileHandler implements Idatastorage {
   }
 
   @Override
-  public void saveMember(Member mb) {
+  public void saveMembers(ArrayList<Member> thelist) {
     ObjectMapper mapper = new ObjectMapper();
     try {
-      MemberList listmember = new MemberList();
-      thelist.add(mb);
       listmember.setMemberList(thelist);
       mapper.writerWithDefaultPrettyPrinter().writeValue(new File(fileName), listmember);
     } catch (IOException e) {

@@ -2,13 +2,9 @@ package model.domain;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-/**
- * Module for the Boat class.
- */
+/** Module for the Boat class. */
 public class Boat {
-  /**
-   * Enumeration for boat type.
-   */
+  /** Enumeration for boat type. */
   public enum BoatType {
     Sailboat,
     Motorsailer,
@@ -28,13 +24,12 @@ public class Boat {
    * An instance of the Boat class.
    *
    * @param owner {Integer}
-   * @param type  {*}
-   * @param length {double}
+   * @param type {*}
    */
-  public Boat(int owner, BoatType type, double length) {
+  public Boat(int owner, BoatType type, double meters) {
     this.owner = owner;
     this.type = type;
-    this.length = length;
+    this.length = getLengthInFeet(meters);
     this.id = owner + idGenerator.getAndIncrement();
   }
 
@@ -52,5 +47,10 @@ public class Boat {
 
   public BoatType getType() {
     return type;
+  }
+  /** Method to get length in feet. */
+  public double getLengthInFeet(double meters) {
+    double length = (meters / 0.3048);
+    return length;
   }
 }

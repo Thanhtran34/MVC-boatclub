@@ -1,5 +1,6 @@
 package model.domain;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.UUID;
 
@@ -7,14 +8,11 @@ import java.util.UUID;
 public class Member {
 
   private String name;
-  private Long personalNumber;
+  private String personalNumber;
   private String memberId;
   private LinkedList<Boat> boatList = new LinkedList<Boat>();
 
-  /**
-   * An default instance of Member class.
-   *
-   */
+  /** An default instance of Member class. */
   public Member() {}
 
   /**
@@ -23,7 +21,7 @@ public class Member {
    * @param name {string} - name of member.
    * @param personnumber {long} - personal number of member.
    */
-  public Member(String name, long personnumber) {
+  public Member(String name, String personnumber) {
     this.name = name;
     this.personalNumber = personnumber;
     // create unique id with 6 characters
@@ -39,7 +37,7 @@ public class Member {
     return memberId;
   }
 
-  public Long getPersonalNumber() {
+  public String getPersonalNumber() {
     return personalNumber;
   }
 
@@ -51,7 +49,7 @@ public class Member {
     this.name = name;
   }
 
-  public void changePersonNo(long pernum) {
+  public void changePersonNo(String pernum) {
     this.personalNumber = pernum;
   }
 
@@ -76,5 +74,15 @@ public class Member {
         return;
       }
     }
+  }
+
+  /** Method to get the amount of boats. */
+  public int getAmountOfBoats() {
+    return boatList.size();
+  }
+
+  /** Method to get the list of boats.. */
+  public Iterator<Boat> getBoatList() {
+    return boatList.iterator();
   }
 }
