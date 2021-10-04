@@ -10,7 +10,7 @@ public class Member {
   private String name;
   private String personalNumber;
   private String memberId;
-  private LinkedList<Boat> boatList = new LinkedList<Boat>();
+  private LinkedList<Boat> boatList = new LinkedList<>();
 
   /** An default instance of Member class. */
   public Member() {}
@@ -81,7 +81,7 @@ public class Member {
     return boatList.size();
   }
 
-  /** Method to get the list of boats.. */
+  /** Method to get the list of boats. */
   public Iterator<Boat> getBoatList() {
     return boatList.iterator();
   }

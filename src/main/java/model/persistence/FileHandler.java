@@ -10,20 +10,20 @@ import model.domain.Member;
 /** Module for the FileHandler class. */
 public class FileHandler implements Idatastorage {
   private String fileName = "MemberData.json";
-  private MemberList listmember;
+  private MemberList listmember = new MemberList();
 
   @Override
-  public MemberList checkAllMembers() {
+  public ArrayList<Member> checkAllMembers() {
     ObjectMapper mapper = new ObjectMapper();
-    MemberList listmember = new MemberList();
+    ArrayList<Member> members = new ArrayList<>();
     try {
-      listmember = mapper.readerFor(MemberList.class).readValue(new File(fileName));
+      members = mapper.readerFor(MemberList.class).readValue(new File(fileName));
     } catch (JsonProcessingException e) {
       e.printStackTrace();
     } catch (IOException e) {
       e.printStackTrace();
     }
-    return listmember;
+    return members;
   }
 
   @Override

@@ -1,17 +1,15 @@
 package view;
 
+import java.util.Iterator;
+import java.util.Scanner;
 import model.domain.Boat;
 import model.domain.Member;
 import model.persistence.MemberList;
-import java.util.Iterator;
-import java.util.Scanner;
 
 /** Module for the ConsoleUi class. */
 public class ConsoleUi implements Iconsole {
   private Scanner scan;
-  private Member member;
-  private MemberList listmember;
-  private Boat boat;
+  private MemberList listmember = new MemberList();
 
   public ConsoleUi() {
     scan = new Scanner(System.in);
@@ -52,11 +50,6 @@ public class ConsoleUi implements Iconsole {
   }
 
   @Override
-  public void showFailMessage() {
-    System.out.println("Oops, something went wrong with your choice. Please try again!");
-  }
-
-  @Override
   public void createMember() {
     System.out.println("Register new member: ");
   }
@@ -67,7 +60,7 @@ public class ConsoleUi implements Iconsole {
   }
 
   @Override
-  public void viewOneMember() {
+  public void lookForOneMember() {
     System.out.println("Check for a specific member: ");
   }
 
@@ -94,7 +87,7 @@ public class ConsoleUi implements Iconsole {
       compactList.append("\n");
     }
 
-    System.out.println(compactList.toString());
+    System.out.println(compactList);
   }
 
   @Override
@@ -121,7 +114,7 @@ public class ConsoleUi implements Iconsole {
       }
       verboseList.append("\n");
     }
-    System.out.println(verboseList.toString());
+    System.out.println(verboseList);
   }
 
   @Override
@@ -145,16 +138,10 @@ public class ConsoleUi implements Iconsole {
   }
 
   @Override
-  public void quit() {
+  public void quitApps() {
     System.out.println("Yacht Club application terminated \n");
   }
 
-  @Override
-  public void displayError(String error) {
-    System.out.println("Error:\n" + error + "\n");
-  }
-
-  @Override
   public String readUserInput() {
     return scan.nextLine();
   }
@@ -163,7 +150,16 @@ public class ConsoleUi implements Iconsole {
   public int readInputInt() {
     try {
       return Integer.parseInt(this.readUserInput());
-    } catch (NumberFormatException e) {
+    } catch (NumberFormatException | NullPointerException e) {
+      return 0;
+    }
+  }
+
+  @Override
+  public double readInputDoub() {
+    try {
+      return Double.parseDouble(this.readUserInput());
+    } catch (NumberFormatException | NullPointerException e) {
       return 0;
     }
   }
@@ -174,20 +170,14 @@ public class ConsoleUi implements Iconsole {
   }
 
   @Override
-  public void noMembers() {}
-
-  @Override
-  public void proceedFail() {
-    System.out.println("Action is completed! please try again");
-  }
-
-  @Override
   public void proceedSucessful() {
     System.out.println("Action completed!");
   }
 
   @Override
-  public void duplicateInformation() {}
+  public void duplicateInformation() {
+    System.out.println("Information is duplicated!");
+  }
 
   @Override
   public void chooseBoat() {}
@@ -214,5 +204,12 @@ public class ConsoleUi implements Iconsole {
   public void chooseBoatLength() {}
 
   @Override
-  public void noBoats() {}
+  public void noBoats() {
+    System.out.println("Sorry, there has no boat owned by this member. Try again");
+  }
+
+  @Override
+  public void saveSuccessful() {
+    System.out.println("Data has been saved.");
+  }
 }

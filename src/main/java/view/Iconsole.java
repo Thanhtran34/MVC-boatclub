@@ -6,13 +6,11 @@ public interface Iconsole {
 
   public void showMainMenu();
 
-  public void showFailMessage();
-
   public void createMember();
 
   public void updateMember();
 
-  public void viewOneMember();
+  public void lookForOneMember();
 
   public void listMembers();
 
@@ -28,19 +26,15 @@ public interface Iconsole {
 
   public void deleteBoat();
 
-  public void quit();
+  public void quitApps();
 
   public String readUserInput();
 
   public int readInputInt();
 
-  public void displayError(String error);
+  public double readInputDoub();
 
   public void printMessage(String message);
-
-  public void noMembers();
-
-  public void proceedFail();
 
   public void proceedSucessful();
 
@@ -59,4 +53,6 @@ public interface Iconsole {
   public void chooseBoatLength();
 
   public void noBoats();
+
+  public void saveSuccessful();
 }

@@ -1,6 +1,12 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import controller.exception.BoatNotFound;
+import controller.exception.InvalidInput;
+import controller.exception.MemberNotFound;
+import model.domain.Boat;
+import model.domain.Boat.BoatType;
 import model.domain.Member;
 import model.persistence.FileHandler;
 import model.persistence.Idatastorage;
@@ -16,11 +22,12 @@ public class YatchClub {
    *
    * @param ui {*}
    */
-  public void runApplication(Iconsole ui) {
-    this.members = new ArrayList<Member>();
+  public void runApplication(Iconsole ui) throws BoatNotFound, InvalidInput, MemberNotFound {
+
+    this.members = new ArrayList<>();
     this.dataStorage = new FileHandler();
     ui.showWelcomeMessage();
-    this.readDataFromFile(ui);
+    this.readDataFromFile();
     int selectedItemOfMenu = 0;
     while (selectedItemOfMenu != -1) {
       ui.showMainMenu();
@@ -31,84 +38,54 @@ public class YatchClub {
           this.saveData(ui);
           break;
         case 2:
-          if (this.anyMembers() == false) {
-            ui.noMembers();
-            break;
-          }
           this.showListMembers(ui);
           break;
         case 3:
-          if (this.anyMembers() == false) {
-            ui.noMembers();
-            break;
-          }
           this.updateMember(ui);
           this.saveData(ui);
           break;
         case 4:
-          if (this.anyMembers() == false) {
-            ui.noMembers();
-            break;
-          }
-          this.viewMember(ui);
+          this.lookForMember(ui);
           this.saveData(ui);
           break;
         case 5:
-          if (this.anyMembers() == false) {
-            ui.noMembers();
-            break;
-          }
           this.deleteMember(ui);
           break;
         case 6:
-          if (this.anyMembers() == false) {
-            ui.noMembers();
-            break;
-          }
           this.registerBoat(ui);
           this.saveData(ui);
           break;
         case 7:
-          if (this.anyMembers() == false) {
-            ui.noMembers();
-            break;
-          }
           this.updateBoat(ui);
           this.saveData(ui);
           break;
         case 8:
-          if (this.anyMembers() == false) {
-            ui.noMembers();
-            break;
-          }
           this.deleteBoat(ui);
           this.saveData(ui);
           break;
         case -1:
-          this.quit(ui);
+          this.quitApps(ui);
           break;
         default:
-          ui.notUnderstood();
-          break;
+          throw new InvalidInput("Wrong input from user!");
       }
     }
   }
 
   /** Method to register a member. */
   private void createMember(Iconsole ui) {
-    String memberName = "";
-    String memberPersonalNumber = "";
+    String memberName;
+    String memberPersonalNumber;
     // show message to get the user information
     ui.createMember();
     ui.chooseName();
     memberName = ui.readUserInput();
     ui.choosePersonalNo();
     memberPersonalNumber = ui.readUserInput();
-    // Check if personalnumber is 12 numbers and only contains numbers.
+    // Check if personal number is 12 numbers and only contains numbers.
     if (memberPersonalNumber.matches("\\d+") && memberPersonalNumber.length() == 12) {
-      if (this.memberExsists(memberName, memberPersonalNumber)) {
+      if (this.checkMemberExistence(memberName, memberPersonalNumber)) {
         ui.duplicateInformation();
-        return;
       } else {
         this.members.add(new Member(memberName, memberPersonalNumber));
       }
@@ -121,14 +98,15 @@ public class YatchClub {
   /**
    * Method to save data from user.
    *
-   * @param ui
+   * @param ui {*}
    */
   private void saveData(Iconsole ui) {
     dataStorage.saveMembers(this.members);
+    ui.saveSuccessful();
   }
 
   /** Method to show list of members. */
-  private void showListMembers(Iconsole ui) {
+  private void showListMembers(Iconsole ui) throws InvalidInput {
     ui.listMembers();
     // user choice for format of list
     int selectedList = ui.readInputInt();
@@ -137,8 +115,7 @@ public class YatchClub {
     } else if (selectedList == 2) {
       this.showVerboseList(ui);
     } else {
-      ui.printMessage("Wrong Input. Try again.");
-      this.showListMembers(ui);
+      throw new InvalidInput("Wrong input!");
     }
   }
 
@@ -153,48 +130,298 @@ public class YatchClub {
   }
 
   /** Method to update the member's information. */
-  private void updateMember(Iconsole ui) {
+  private void updateMember(Iconsole ui) throws MemberNotFound {
     ui.updateMember();
+    // Show a list of members and select a specific member
     this.showCompactList(ui);
     ui.chooseMemberId();
     String memberId = ui.readUserInput();
     if (this.validMemberId(memberId)) {
-
-      for (int i = 0; i < this.members.size(); i++) {
-
-        if (this.members.get(i).getMemberId() == memberId) {
-
+      for (Member m : this.members) {
+        if (m.getMemberId().equals(memberId)) {
           // Update member
           ui.printMessage("Insert new user's information: ");
           ui.chooseName();
-          this.members.get(i).changeName(ui.readUserInput());
+          m.changeName(ui.readUserInput());
           ui.choosePersonalNo();
-          this.members.get(i).changePersonNo(ui.readUserInput());
+          m.changePersonNo(ui.readUserInput());
           ui.proceedSucessful();
-          return;
         }
       }
     } else {
-      // Member not found
-      ui.proceedFail();
-      this.updateMember(ui);
+      throw new MemberNotFound("Member is not found!");
     }
   }
 
   /**
    * Method to check the valid of the memberid.
    *
-   * @param memberIdNo
+   * @param memberIdNo {*}
    * @return {*}
    */
   private boolean validMemberId(String memberIdNo) {
     boolean valid = true;
-    // check and validate the memberid
-    for (Member member : this.members) {
-      if (member.getMemberId().equals(memberIdNo) && memberIdNo.length() == 6) {
+    // check and validate the member id
+    for (Member m : this.members) {
+      if (m.getMemberId().equals(memberIdNo) && memberIdNo.length() == 6) {
         return valid;
       }
     }
     return !valid;
+  }
+
+  /** Method to read the data from persistence package. */
+  private void readDataFromFile() {
+    this.members = this.dataStorage.checkAllMembers();
+  }
+
+  /** Method to look for a specific member. */
+  private void lookForMember(Iconsole ui) throws MemberNotFound {
+    ui.lookForOneMember();
+    // Show a list of members and select a specific member
+    this.showCompactList(ui);
+    ui.chooseMemberId();
+    String memberId = ui.readUserInput();
+    if (this.validMemberId(memberId)) {
+
+      for (Member m : this.members) {
+
+        if (m.getMemberId().equals(memberId)) {
+          // Print out member information
+          this.showMemberInfo(ui, m);
+        }
+      }
+
+    } else {
+      throw new MemberNotFound("Member does not exist!");
+    }
+  }
+
+  /** Method to show member's profile. */
+  private void showMemberInfo(Iconsole ui, Member m) {
+    ui.printMessage(
+        "ID: "
+            + m.getMemberId()
+            + "\tName: "
+            + m.getName()
+            + "\tPersonal Number: "
+            + m.getPersonalNumber());
+    this.getListOfBoats(ui, m.getBoats());
+  }
+
+  /** Method to get the list of boats of one member. */
+  private void getListOfBoats(Iconsole ui, LinkedList<Boat> boats) {
+    // Printing boats
+    if (boats.size() < 1) {
+      ui.noBoats();
+      this.lookForMember(ui);
+    } else {
+
+      ui.printMessage("\tBoats are owned by this member");
+      for (Boat boat : boats) {
+
+        ui.printMessage(
+            "\t\t Boat ID:"
+                + boat.getBoatId()
+                + "\tType: "
+                + boat.getType()
+                + "\t Length: "
+                + boat.getLength());
+      }
+    }
+  }
+
+  /** Method to delete one specific member. */
+  private void deleteMember(Iconsole ui) throws MemberNotFound {
+    ui.deleteMember();
+    // Show a list of members and select a specific member
+    this.showCompactList(ui);
+    ui.chooseMemberId();
+    String memberId = ui.readUserInput();
+    if (this.validMemberId(memberId)) {
+      for (Member m : this.members) {
+        if (m.getMemberId().equals(memberId)) {
+          this.members.remove(m);
+          ui.proceedSucessful();
+        }
+      }
+    } else {
+      throw new MemberNotFound("Member does not exist!");
+    }
+  }
+
+  /** Method to register a boat to its owner. */
+  private void registerBoat(Iconsole ui) throws MemberNotFound {
+    ui.registerBoat();
+    // Show a list of members and select a specific member
+    this.showCompactList(ui);
+    ui.chooseMemberId();
+    String memberId = ui.readUserInput();
+    if (this.validMemberId(memberId)) {
+      // Check boat information
+      BoatType type = this.getBoatTypes(ui);
+      ui.chooseBoatLength();
+      double boatLength = ui.readInputDoub();
+      for (Member m : this.members) {
+
+        if (m.getMemberId().equals(memberId)) {
+
+          for (Boat boat : m.getBoats()) {
+
+            if (boat.getLength() == boatLength && boat.getType() == type) {
+              // Boat found and not unique
+              ui.duplicateInformation();
+            }
+          }
+          // register boat to its owner
+          m.getBoats().add(new Boat(memberId, type, boatLength));
+          ui.proceedSucessful();
+        }
+      }
+
+    } else {
+      throw new MemberNotFound("Member is not found!");
+    }
+  }
+
+  /**
+   * Method to generate BoatType list.
+   *
+   * @param ui {*}
+   * @return {*}
+   */
+  private BoatType getBoatTypes(Iconsole ui) {
+    ui.chooseBoatType();
+    int counter = 1;
+    for (BoatType type : BoatType.values()) {
+      ui.printMessage(counter + ". " + type.toString());
+      counter++;
+    }
+
+    counter = ui.readInputInt() - 1;
+
+    // Preventing illegal values
+    if (counter > 3) {
+      counter = 0;
+    }
+
+    return BoatType.values()[counter];
+  }
+
+  /** Method to update boat information. */
+  private void updateBoat(Iconsole ui) throws MemberNotFound, BoatNotFound {
+    ui.updateBoat();
+    // Show a list of members and select a specific member
+    this.showCompactList(ui);
+    ui.chooseMemberId();
+    String memberId = ui.readUserInput();
+
+    if (this.validMemberId(memberId)) {
+
+      for (Member member : this.members) {
+
+        if (member.getMemberId().equals(memberId)) {
+
+          if (member.getBoats().size() == 0) {
+            // No boats registered to member
+            ui.noBoats();
+            return;
+          }
+          // Select boat
+          int boatId = this.getBoatId(ui, member);
+          for (int i = 0; i < member.getBoats().size(); i++) {
+            if (member.getBoats().get(i).getBoatId() == boatId) {
+
+              // Update boat
+              member.getBoats().get(i).setType(this.getBoatTypes(ui));
+              ui.chooseBoatLength();
+              double boatLength = ui.readInputDoub();
+              member.getBoats().get(i).setLength(boatLength);
+              ui.proceedSucessful();
+              return;
+            }
+          }
+
+          // Boat not found
+          throw new BoatNotFound("Boat is not found!");
+        } else {
+
+          // Member not found
+          throw new MemberNotFound("Member is not found!");
+        }
+      }
+    }
+  }
+
+  /** Method to delete a boat. */
+  private void deleteBoat(Iconsole ui) throws MemberNotFound, BoatNotFound {
+    ui.deleteBoat();
+    // Show a list of members and select a specific member
+    this.showCompactList(ui);
+    ui.chooseMemberId();
+    String memberId = ui.readUserInput();
+    if (this.validMemberId(memberId)) {
+
+      for (Member member : this.members) {
+
+        if (member.getMemberId().equals(memberId)) {
+
+          // No boats stored on member
+          if (member.getBoats().size() == 0) {
+
+            ui.noBoats();
+          }
+
+          // Select boat
+          int boatId = this.getBoatId(ui, member);
+          for (int i = 0; i < member.getBoats().size(); i++) {
+
+            if (member.getBoats().get(i).getBoatId() == boatId) {
+
+              // Removal of boat
+              member.getBoats().remove(i);
+              ui.proceedSucessful();
+              return;
+            }
+          }
+          // Boat not found
+          throw new BoatNotFound("Boat is not founc!");
+        } else {
+
+          // Member not found
+          throw new MemberNotFound("Member is not found!");
+        }
+      }
+    }
+  }
+
+  /**
+   * Method to get the id of the boat.
+   *
+   * @param ui {*}
+   * @param member {*}
+   * @return {*}
+   */
+  private int getBoatId(Iconsole ui, Member member) {
+    this.getListOfBoats(ui, member.getBoats());
+    ui.chooseBoat();
+    return ui.readInputInt();
+  }
+
+  /** Method to check if the member is already registered in the datastorage. */
+  private boolean checkMemberExistence(String memberName, String memberPersonalNumber) {
+    boolean result = true;
+    for (Member m : this.members) {
+      if (m.getName().equalsIgnoreCase(memberName)
+          && m.getMemberId().equalsIgnoreCase(memberPersonalNumber)) {
+        return result;
+      }
+    }
+    return !result;
+  }
+
+  /** Method to quit the apps. */
+  private void quitApps(Iconsole ui) {
+    ui.quitApps();
   }
 }
