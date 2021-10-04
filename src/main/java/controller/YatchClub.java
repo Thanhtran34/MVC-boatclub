@@ -1,10 +1,10 @@
 package controller;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
 import controller.exception.BoatNotFound;
 import controller.exception.InvalidInput;
 import controller.exception.MemberNotFound;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import model.domain.Boat;
 import model.domain.Boat.BoatType;
 import model.domain.Member;
