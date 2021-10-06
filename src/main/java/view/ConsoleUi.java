@@ -76,15 +76,14 @@ public class ConsoleUi implements Iconsole {
   public void showCompactList() {
     Iterator<Member> membersList = listmember.getMemberList();
     StringBuffer compactList = new StringBuffer();
-    System.out.println(
-        "--------------------------Compact List of  all members----------------------------\n");
+    System.out.println("---------------------Compact List of  all members----------------------\n");
     while (membersList.hasNext()) {
       Member member = membersList.next();
 
-      compactList.append("Member Id: " + member.getMemberId() + " | ");
-      compactList.append("Name: " + member.getName() + " | ");
-      compactList.append("Amount of Boats: " + member.getAmountOfBoats() + " | ");
-      compactList.append("\n");
+      compactList.append("Member Id: " + member.getMemberId() + "\n");
+      compactList.append("Name: " + member.getName() + "\n");
+      compactList.append("Amount of Boats: " + member.getAmountOfBoats() + "\n");
+      compactList.append("===================================");
     }
 
     System.out.println(compactList);
@@ -94,23 +93,22 @@ public class ConsoleUi implements Iconsole {
   public void showVerboseList() {
     Iterator<Member> membersList = listmember.getMemberList();
     StringBuffer verboseList = new StringBuffer();
-    System.out.println(
-        "-------------------------------Verbose List of all members-------------------------------\n");
+    System.out.println("--------------------------Verbose List of all members--------------------------\n");
     while (membersList.hasNext()) {
       Member member = membersList.next();
-      verboseList.append("Member Id: " + member.getMemberId() + " | ");
-      verboseList.append("Name: " + member.getName() + " | ");
-      verboseList.append("Personal Number: " + member.getPersonalNumber() + " | ");
-      verboseList.append("Amount of Boats: " + member.getAmountOfBoats() + " | ");
-      verboseList.append("\n");
+      verboseList.append("Member Id: " + member.getMemberId() + "\n");
+      verboseList.append("Name: " + member.getName() + "\n");
+      verboseList.append("Personal Number: " + member.getPersonalNumber() + "\n");
+      verboseList.append("Amount of Boats: " + member.getAmountOfBoats() + "\n");
+      verboseList.append("======================================");
       int i = 1;
       Iterator<Boat> boatsList = member.getBoatList();
       while (boatsList.hasNext()) {
         Boat boat = boatsList.next();
         verboseList.append(i++);
-        verboseList.append("\t Type of Boat: " + boat.getType() + " | ");
+        verboseList.append("\t Type of Boat: " + boat.getType() + "\n");
         verboseList.append("\t Length of Boat: " + boat.getLength() + " ft");
-        verboseList.append("\n");
+        verboseList.append("========================================");
       }
       verboseList.append("\n");
     }
@@ -180,7 +178,9 @@ public class ConsoleUi implements Iconsole {
   }
 
   @Override
-  public void chooseBoat() {}
+  public void chooseBoat() {
+    System.out.println("Please enter boat ID: ");
+  }
 
   @Override
   public void chooseName() {
@@ -194,14 +194,18 @@ public class ConsoleUi implements Iconsole {
 
   @Override
   public void chooseMemberId() {
-    System.out.println("Please specify your memberID: ");
+    System.out.println("Please enter your memberID: ");
   }
 
   @Override
-  public void chooseBoatType() {}
+  public void chooseBoatType() {
+    System.out.println("Please enter boat type: ");
+  }
 
   @Override
-  public void chooseBoatLength() {}
+  public void chooseBoatLength() {
+    System.out.println("Please enter boat length: ");
+  }
 
   @Override
   public void noBoats() {
