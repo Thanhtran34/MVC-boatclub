@@ -107,7 +107,8 @@ public class ConsoleUi implements Iconsole {
         Boat boat = boatsList.next();
         verboseList.append(i++);
         verboseList.append("\t Type of Boat: " + boat.getType() + "\n");
-        verboseList.append("\t Length of Boat: " + boat.getLength() + " ft");
+        verboseList.append("\t Length of Boat in Feet: " + boat.getLength() + " ft");
+        verboseList.append("\t Length of Boat in Meters: " + boat.getLengthInMeters() + " meters");
         verboseList.append("========================================");
       }
       verboseList.append("\n");

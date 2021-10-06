@@ -26,15 +26,11 @@ public class Boat {
    * @param owner {Integer}
    * @param type {*}
    */
-  public Boat(String owner, BoatType type, double meters) {
+  public Boat(String owner, BoatType type, double length) {
     this.owner = owner;
     this.type = type;
-    this.length = getLengthInFeet(meters);
+    this.length = length;
     this.id = idGenerator.getAndIncrement();
-  }
-
-  public String getOwner() {
-    return owner;
   }
 
   public double getLength() {
@@ -57,9 +53,8 @@ public class Boat {
     return type;
   }
 
-  /** Method to get length in feet. */
-  public double getLengthInFeet(double meters) {
-    double length = (meters / 0.3048);
-    return length;
+  /** Method to get length in meters. */
+  public double getLengthInMeters() {
+    return this.length * 0.3048;
   }
 }

@@ -367,7 +367,7 @@ public class YatchClub {
             }
           }
           // Boat not found
-          throw new BoatNotFound("Boat is not founc!");
+          throw new BoatNotFound("Boat is not found!");
         } else {
 
           // Member not found
@@ -390,7 +390,7 @@ public class YatchClub {
     return ui.readInputInt();
   }
 
-  /** Method to check if the member is already registered in the datastorage. */
+  /** Method to check if the member is already registered in the data storage. */
   private boolean checkMemberExistence(String memberName, String memberPersonalNumber) {
     boolean result = true;
     for (Member m : this.members) {
