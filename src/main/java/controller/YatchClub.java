@@ -16,6 +16,7 @@ import view.Iconsole;
 public class YatchClub {
   private ArrayList<Member> members;
   private Idatastorage dataStorage;
+  private DataController dataController;
 
   /**
    * Method to start the Yatch Club apps.
@@ -26,8 +27,9 @@ public class YatchClub {
 
     this.members = new ArrayList<>();
     this.dataStorage = new FileHandler();
+    this.dataController = new DataController();
     ui.showWelcomeMessage();
-    this.readDataFromFile();
+    this.dataController.readDataFromFile(this.dataStorage, this.members);
     int selectedItemOfMenu = 0;
     while (selectedItemOfMenu != -1) {
       ui.showMainMenu();
@@ -35,33 +37,33 @@ public class YatchClub {
       switch (selectedItemOfMenu) {
         case 1:
           this.createMember(ui);
-          this.saveData(ui);
+          this.dataController.saveData(ui, this.dataStorage, this.members);
           break;
         case 2:
           this.showListMembers(ui);
           break;
         case 3:
           this.updateMember(ui);
-          this.saveData(ui);
+          this.dataController.saveData(ui, this.dataStorage, this.members);
           break;
         case 4:
           this.lookForMember(ui);
-          this.saveData(ui);
+          this.dataController.saveData(ui, this.dataStorage, this.members);
           break;
         case 5:
           this.deleteMember(ui);
           break;
         case 6:
           this.registerBoat(ui);
-          this.saveData(ui);
+          this.dataController.saveData(ui, this.dataStorage, this.members);
           break;
         case 7:
           this.updateBoat(ui);
-          this.saveData(ui);
+          this.dataController.saveData(ui, this.dataStorage, this.members);
           break;
         case 8:
           this.deleteBoat(ui);
-          this.saveData(ui);
+          this.dataController.saveData(ui, this.dataStorage, this.members);
           break;
         case -1:
           this.quitApps(ui);
@@ -93,16 +95,6 @@ public class YatchClub {
       ui.printMessage("Sorry, its not a right personal number! Try again.");
       ui.choosePersonalNo();
     }
-  }
-
-  /**
-   * Method to save data from user.
-   *
-   * @param ui {*}
-   */
-  private void saveData(Iconsole ui) {
-    dataStorage.saveMembers(this.members);
-    ui.saveSuccessful();
   }
 
   /** Method to show list of members. */
@@ -168,11 +160,6 @@ public class YatchClub {
       }
     }
     return !valid;
-  }
-
-  /** Method to read the data from persistence package. */
-  private void readDataFromFile() {
-    this.members = this.dataStorage.checkAllMembers();
   }
 
   /** Method to look for a specific member. */
@@ -371,7 +358,6 @@ public class YatchClub {
 
             ui.noBoats();
           }
-
           // Select boat
           int boatId = this.getBoatId(ui, member);
           for (int i = 0; i < member.getBoats().size(); i++) {

@@ -2,57 +2,57 @@ package view;
 
 /** A user console interface. */
 public interface Iconsole {
-  public void showWelcomeMessage();
+  void showWelcomeMessage();
 
-  public void showMainMenu();
+  void showMainMenu();
 
-  public void createMember();
+  void createMember();
 
-  public void updateMember();
+  void updateMember();
 
-  public void lookForOneMember();
+  void lookForOneMember();
 
-  public void listMembers();
+  void listMembers();
 
-  public void showCompactList();
+  void showCompactList();
 
-  public void showVerboseList();
+  void showVerboseList();
 
-  public void deleteMember();
+  void deleteMember();
 
-  public void registerBoat();
+  void registerBoat();
 
-  public void updateBoat();
+  void updateBoat();
 
-  public void deleteBoat();
+  void deleteBoat();
 
-  public void quitApps();
+  void quitApps();
 
-  public String readUserInput();
+  String readUserInput();
 
-  public int readInputInt();
+  int readInputInt();
 
-  public double readInputDoub();
+  double readInputDoub();
 
-  public void printMessage(String message);
+  void printMessage(String message);
 
-  public void proceedSucessful();
+  void proceedSucessful();
 
-  public void duplicateInformation();
+  void duplicateInformation();
 
-  public void chooseBoat();
+  void chooseBoat();
 
-  public void chooseName();
+  void chooseName();
 
-  public void choosePersonalNo();
+  void choosePersonalNo();
 
-  public void chooseMemberId();
+  void chooseMemberId();
 
-  public void chooseBoatType();
+  void chooseBoatType();
 
-  public void chooseBoatLength();
+  void chooseBoatLength();
 
-  public void noBoats();
+  void noBoats();
 
-  public void saveSuccessful();
+  void saveSuccessful();
 }

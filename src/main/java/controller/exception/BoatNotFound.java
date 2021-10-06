@@ -10,6 +10,8 @@ public class BoatNotFound extends RuntimeException {
 
   public BoatNotFound(String message) {
     super(message);
+    System.out.println("======================================");
     System.out.println("Error: " + message);
+    System.out.println("======================================");
   }
 }
