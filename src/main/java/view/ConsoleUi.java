@@ -1,15 +1,10 @@
 package view;
 
-import java.util.Iterator;
 import java.util.Scanner;
-import model.domain.Boat;
-import model.domain.Member;
-import model.persistence.MemberList;
 
 /** Module for the ConsoleUi class. */
 public class ConsoleUi implements Iconsole {
   private Scanner scan;
-  private MemberList listmember = new MemberList();
 
   public ConsoleUi() {
     scan = new Scanner(System.in);
@@ -70,50 +65,6 @@ public class ConsoleUi implements Iconsole {
     System.out.println("1. Compact list");
     System.out.println("2. Verbose List");
     System.out.print("Enter your choice and press enter:\n");
-  }
-
-  @Override
-  public void showCompactList() {
-    Iterator<Member> membersList = listmember.getMemberList();
-    StringBuffer compactList = new StringBuffer();
-    System.out.println("---------------------Compact List of  all members----------------------\n");
-    while (membersList.hasNext()) {
-      Member member = membersList.next();
-
-      compactList.append("Member Id: " + member.getMemberId() + "\n");
-      compactList.append("Name: " + member.getName() + "\n");
-      compactList.append("Amount of Boats: " + member.getAmountOfBoats() + "\n");
-      compactList.append("===================================");
-    }
-
-    System.out.println(compactList);
-  }
-
-  @Override
-  public void showVerboseList() {
-    Iterator<Member> membersList = listmember.getMemberList();
-    StringBuffer verboseList = new StringBuffer();
-    System.out.println("--------------------------Verbose List of all members--------------------------\n");
-    while (membersList.hasNext()) {
-      Member member = membersList.next();
-      verboseList.append("Member Id: " + member.getMemberId() + "\n");
-      verboseList.append("Name: " + member.getName() + "\n");
-      verboseList.append("Personal Number: " + member.getPersonalNumber() + "\n");
-      verboseList.append("Amount of Boats: " + member.getAmountOfBoats() + "\n");
-      verboseList.append("======================================");
-      int i = 1;
-      Iterator<Boat> boatsList = member.getBoatList();
-      while (boatsList.hasNext()) {
-        Boat boat = boatsList.next();
-        verboseList.append(i++);
-        verboseList.append("\t Type of Boat: " + boat.getType() + "\n");
-        verboseList.append("\t Length of Boat in Feet: " + boat.getLength() + " ft");
-        verboseList.append("\t Length of Boat in Meters: " + boat.getLengthInMeters() + " meters");
-        verboseList.append("========================================");
-      }
-      verboseList.append("\n");
-    }
-    System.out.println(verboseList);
   }
 
   @Override

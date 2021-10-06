@@ -33,6 +33,10 @@ public class Boat {
     this.id = idGenerator.getAndIncrement();
   }
 
+  public String getOwner() {
+    return owner;
+  }
+
   public double getLength() {
     return length;
   }

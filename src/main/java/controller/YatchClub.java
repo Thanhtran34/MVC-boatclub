@@ -3,6 +3,8 @@ package controller;
 import controller.exception.BoatNotFound;
 import controller.exception.InvalidInput;
 import controller.exception.MemberNotFound;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import model.domain.Boat;
@@ -20,7 +22,7 @@ public class YatchClub {
    *
    * @param ui {*}
    */
-  public void runApplication(Iconsole ui) throws BoatNotFound, InvalidInput, MemberNotFound {
+  public void runApplication(Iconsole ui) throws InvalidInput, IOException {
 
     this.members = new ArrayList<>();
     this.dataController = new DataController();
@@ -89,7 +91,6 @@ public class YatchClub {
       }
     } else {
       ui.printMessage("Sorry, its not a right personal number! Try again.");
-      ui.choosePersonalNo();
     }
   }
 
@@ -99,29 +100,64 @@ public class YatchClub {
     // user choice for format of list
     int selectedList = ui.readInputInt();
     if (selectedList == 1) {
-      this.showCompactList(ui);
+      this.showCompactList(ui, this.members);
     } else if (selectedList == 2) {
-      this.showVerboseList(ui);
+      this.showVerboseList(ui, this.members);
     } else {
       throw new InvalidInput("Wrong input!");
     }
   }
 
   /** Method to show the compact list of members. */
-  private void showCompactList(Iconsole ui) {
-    ui.showCompactList();
+  private void showCompactList(Iconsole ui, ArrayList<Member> members) {
+    StringBuffer compactList = new StringBuffer();
+    System.out.println("---------------------Compact List of  all members----------------------\n");
+    if (members.size() != 0) {
+      for (Member m : members) {
+        compactList.append("Member Id: " + m.getMemberId() + "\n");
+        compactList.append("Name: " + m.getName() + "\n");
+        compactList.append("Amount of Boats: " + m.getBoats().size() + "\n");
+        compactList.append("===================================");
+      }
+    }
+    System.out.println(compactList);
   }
 
   /** Method to show the verbose list of members. */
-  private void showVerboseList(Iconsole ui) {
-    ui.showVerboseList();
+  private void showVerboseList(Iconsole ui, ArrayList<Member> members) {
+    StringBuffer verboseList = new StringBuffer();
+    System.out.println(
+        "--------------------------Verbose List of all members--------------------------\n");
+    if (members.size() != 0) {
+      for (Member m : members) {
+        verboseList.append("Member Id: " + m.getMemberId() + "\n");
+        verboseList.append("Name: " + m.getName() + "\n");
+        verboseList.append("Personal Number: " + m.getPersonalNumber() + "\n");
+        verboseList.append("Amount of Boats: " + m.getBoats().size() + "\n");
+        verboseList.append("======================================");
+        int i = 1;
+        LinkedList<Boat> boatsList = m.getBoats();
+        if (boatsList.size() != 0) {
+          for (Boat boat : boatsList) {
+            verboseList.append(i++);
+            verboseList.append("\t Type of Boat: " + boat.getType() + "\n");
+            verboseList.append("\t Length of Boat in Feet: " + boat.getLength() + " ft");
+            verboseList.append(
+                    "\t Length of Boat in Meters: " + boat.getLengthInMeters() + " meters");
+            verboseList.append("========================================");
+          }
+        }
+        verboseList.append("\n");
+      }
+    }
+    System.out.println(verboseList);
   }
 
   /** Method to update the member's information. */
   private void updateMember(Iconsole ui) throws MemberNotFound {
     ui.updateMember();
     // Show a list of members and select a specific member
-    this.showCompactList(ui);
+    this.showCompactList(ui, this.members);
     ui.chooseMemberId();
     String memberId = ui.readUserInput();
     if (this.validMemberId(memberId)) {
@@ -162,7 +198,7 @@ public class YatchClub {
   private void lookForMember(Iconsole ui) throws MemberNotFound {
     ui.lookForOneMember();
     // Show a list of members and select a specific member
-    this.showCompactList(ui);
+    this.showCompactList(ui, this.members);
     ui.chooseMemberId();
     String memberId = ui.readUserInput();
     if (this.validMemberId(memberId)) {
@@ -218,7 +254,7 @@ public class YatchClub {
   private void deleteMember(Iconsole ui) throws MemberNotFound {
     ui.deleteMember();
     // Show a list of members and select a specific member
-    this.showCompactList(ui);
+    this.showCompactList(ui, this.members);
     ui.chooseMemberId();
     String memberId = ui.readUserInput();
     if (this.validMemberId(memberId)) {
@@ -237,7 +273,7 @@ public class YatchClub {
   private void registerBoat(Iconsole ui) throws MemberNotFound {
     ui.registerBoat();
     // Show a list of members and select a specific member
-    this.showCompactList(ui);
+    this.showCompactList(ui, this.members);
     ui.chooseMemberId();
     String memberId = ui.readUserInput();
     if (this.validMemberId(memberId)) {
@@ -295,7 +331,7 @@ public class YatchClub {
   private void updateBoat(Iconsole ui) throws MemberNotFound, BoatNotFound {
     ui.updateBoat();
     // Show a list of members and select a specific member
-    this.showCompactList(ui);
+    this.showCompactList(ui, this.members);
     ui.chooseMemberId();
     String memberId = ui.readUserInput();
 
@@ -339,7 +375,7 @@ public class YatchClub {
   private void deleteBoat(Iconsole ui) throws MemberNotFound, BoatNotFound {
     ui.deleteBoat();
     // Show a list of members and select a specific member
-    this.showCompactList(ui);
+    this.showCompactList(ui, this.members);
     ui.chooseMemberId();
     String memberId = ui.readUserInput();
     if (this.validMemberId(memberId)) {

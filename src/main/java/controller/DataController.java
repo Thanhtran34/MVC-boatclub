@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import model.domain.Member;
 import model.persistence.FileHandler;
@@ -20,13 +21,13 @@ public class DataController {
    * @param ui {*}
    * @param members {*}
    */
-  public void saveData(Iconsole ui, ArrayList<Member> members) {
+  public void saveData(Iconsole ui, ArrayList<Member> members) throws IOException {
     this.dataStorage.saveMembers(members);
     ui.saveSuccessful();
   }
 
   /** Method to read data from the file. */
-  public ArrayList<Member> readDataFromFile() {
+  public ArrayList<Member> readDataFromFile() throws IOException {
     return this.dataStorage.checkAllMembers();
   }
 }

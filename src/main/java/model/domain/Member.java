@@ -1,6 +1,5 @@
 package model.domain;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.UUID;
 
@@ -51,15 +50,5 @@ public class Member {
 
   public void changePersonNo(String pernum) {
     this.personalNumber = pernum;
-  }
-
-  /** Method to get the amount of boats. */
-  public int getAmountOfBoats() {
-    return boatList.size();
-  }
-
-  /** Method to get the list of boats. */
-  public Iterator<Boat> getBoatList() {
-    return boatList.iterator();
   }
 }

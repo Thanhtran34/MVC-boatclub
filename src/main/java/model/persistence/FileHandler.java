@@ -1,39 +1,32 @@
 package model.persistence;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
+
+import com.fasterxml.jackson.databind.ObjectWriter;
 import model.domain.Member;
 
 /** Module for the FileHandler class. */
 public class FileHandler implements Idatastorage {
   private String fileName = "MemberData.json";
-  private MemberList listmember = new MemberList();
 
   @Override
-  public ArrayList<Member> checkAllMembers() {
+  public ArrayList<Member> checkAllMembers() throws JsonProcessingException, IOException {
     ObjectMapper mapper = new ObjectMapper();
-    ArrayList<Member> members = new ArrayList<>();
-    try {
-      members = mapper.readerFor(MemberList.class).readValue(new File(fileName));
-    } catch (JsonProcessingException e) {
-      e.printStackTrace();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-    return members;
+    Member[] members = mapper.readerFor(Member[].class).readValue(new File(fileName));
+    return new ArrayList<>(Arrays.asList(members));
   }
 
   @Override
-  public void saveMembers(ArrayList<Member> thelist) {
+  public void saveMembers(ArrayList<Member> members) throws IOException {
     ObjectMapper mapper = new ObjectMapper();
-    try {
-      listmember.setMemberList(thelist);
-      mapper.writerWithDefaultPrettyPrinter().writeValue(new File(fileName), listmember);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+    ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
+    writer.writeValue(Paths.get(fileName).toFile(), members);
   }
 }

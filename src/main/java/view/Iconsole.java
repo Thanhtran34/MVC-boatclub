@@ -14,10 +14,6 @@ public interface Iconsole {
 
   void listMembers();
 
-  void showCompactList();
-
-  void showVerboseList();
-
   void deleteMember();
 
   void registerBoat();

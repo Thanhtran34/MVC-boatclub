@@ -1,5 +1,6 @@
 package model.persistence;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import model.domain.Member;
 
@@ -8,7 +9,7 @@ import model.domain.Member;
  *
  */
 public interface Idatastorage {
-  public ArrayList<Member> checkAllMembers();
+  public ArrayList<Member> checkAllMembers() throws IOException;
 
-  public void saveMembers(ArrayList<Member> listmember);
+  public void saveMembers(ArrayList<Member> listmember) throws IOException;
 }
