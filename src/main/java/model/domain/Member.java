@@ -53,29 +53,6 @@ public class Member {
     this.personalNumber = pernum;
   }
 
-  /**
-   * Method to add the boat.
-   *
-   * @param b {*} - Boat owned by member.
-   */
-  public void addBoat(Boat b) {
-    this.boatList.add(b);
-  }
-
-  /**
-   * Method to remove the boat.
-   *
-   * @param b {*} - Boat removed by member.
-   */
-  public void removeBoat(Boat b) {
-    for (int i = 0; i < this.boatList.size(); i++) {
-      if (b.getBoatId() == this.boatList.get(i).getBoatId()) {
-        this.boatList.remove(i);
-        return;
-      }
-    }
-  }
-
   /** Method to get the amount of boats. */
   public int getAmountOfBoats() {
     return boatList.size();

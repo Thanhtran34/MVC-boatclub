@@ -195,7 +195,7 @@ public class YatchClub {
   /** Method to get the list of boats of one member. */
   private void getListOfBoats(Iconsole ui, LinkedList<Boat> boats) {
     // Printing boats
-    if (boats.size() < 1) {
+    if (boats.size() == 0) {
       ui.noBoats();
       this.lookForMember(ui);
     } else {
@@ -248,8 +248,8 @@ public class YatchClub {
       for (Member m : this.members) {
 
         if (m.getMemberId().equals(memberId)) {
-
-          for (Boat boat : m.getBoats()) {
+          LinkedList<Boat> boatList = m.getBoats();
+          for (Boat boat : boatList) {
 
             if (boat.getLength() == boatLength && boat.getType() == type) {
               // Boat found and not unique
@@ -257,7 +257,7 @@ public class YatchClub {
             }
           }
           // register boat to its owner
-          m.getBoats().add(new Boat(memberId, type, boatLength));
+          boatList.add(new Boat(memberId, type, boatLength));
           ui.proceedSucessful();
         }
       }
@@ -301,30 +301,29 @@ public class YatchClub {
 
     if (this.validMemberId(memberId)) {
 
-      for (Member member : this.members) {
+      for (Member m : this.members) {
 
-        if (member.getMemberId().equals(memberId)) {
-
-          if (member.getBoats().size() == 0) {
+        if (m.getMemberId().equals(memberId)) {
+          LinkedList<Boat> boatList = m.getBoats();
+          if (boatList.size() == 0) {
             // No boats registered to member
             ui.noBoats();
             return;
           }
           // Select boat
-          int boatId = this.getBoatId(ui, member);
-          for (int i = 0; i < member.getBoats().size(); i++) {
-            if (member.getBoats().get(i).getBoatId() == boatId) {
+          int boatId = this.getBoatId(ui, m);
+          for (Boat b : boatList) {
+            if (b.getBoatId() == boatId) {
 
               // Update boat
-              member.getBoats().get(i).setType(this.getBoatTypes(ui));
+              b.setType(this.getBoatTypes(ui));
               ui.chooseBoatLength();
               double boatLength = ui.readInputDoub();
-              member.getBoats().get(i).setLength(boatLength);
+              b.setLength(boatLength);
               ui.proceedSucessful();
               return;
             }
           }
-
           // Boat not found
           throw new BoatNotFound("Boat is not found!");
         } else {
@@ -345,23 +344,24 @@ public class YatchClub {
     String memberId = ui.readUserInput();
     if (this.validMemberId(memberId)) {
 
-      for (Member member : this.members) {
+      for (Member m : this.members) {
 
-        if (member.getMemberId().equals(memberId)) {
-
+        if (m.getMemberId().equals(memberId)) {
+          LinkedList<Boat> boatList = m.getBoats();
           // No boats stored on member
-          if (member.getBoats().size() == 0) {
+
+          if (boatList.size() == 0) {
 
             ui.noBoats();
           }
           // Select boat
-          int boatId = this.getBoatId(ui, member);
-          for (int i = 0; i < member.getBoats().size(); i++) {
+          int boatId = this.getBoatId(ui, m);
+          for (Boat b : boatList) {
 
-            if (member.getBoats().get(i).getBoatId() == boatId) {
+            if (b.getBoatId() == boatId) {
 
               // Removal of boat
-              member.getBoats().remove(i);
+              boatList.remove(b);
               ui.proceedSucessful();
               return;
             }
