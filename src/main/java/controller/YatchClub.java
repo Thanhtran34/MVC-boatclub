@@ -29,7 +29,7 @@ public class YatchClub {
     this.dataStorage = new FileHandler();
     this.dataController = new DataController();
     ui.showWelcomeMessage();
-    this.dataController.readDataFromFile(this.dataStorage, this.members);
+    this.members = this.dataController.readDataFromFile(this.dataStorage);
     int selectedItemOfMenu = 0;
     while (selectedItemOfMenu != -1) {
       ui.showMainMenu();

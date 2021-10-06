@@ -21,7 +21,7 @@ public class DataController {
   }
 
   /** Method to read data from the file. */
-  public void readDataFromFile(Idatastorage dataStorage, ArrayList<Member> members) {
-    members = dataStorage.checkAllMembers();
+  public ArrayList<Member> readDataFromFile(Idatastorage dataStorage) {
+    return  dataStorage.checkAllMembers();
   }
 }
