@@ -3,7 +3,6 @@ package controller;
 import controller.exception.BoatNotFound;
 import controller.exception.InvalidInput;
 import controller.exception.MemberNotFound;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -89,7 +88,9 @@ public class YatchClub {
         this.members.add(new Member(memberName, memberPersonalNumber));
       }
     } else {
-      ui.printMessage("Sorry, its not a right personal number! Try again.");
+      ui.printMessage("Sorry, it's not a right format of personal number. TRY AGAIN!");
+      ui.printMessage("");
+      this.createMember(ui);
     }
   }
 
@@ -217,7 +218,7 @@ public class YatchClub {
   /** Method to show member's profile. */
   private void showMemberInfo(Iconsole ui, Member m) {
     ui.printMessage(
-        "ID: "
+        "MemberID: "
             + m.getMemberId()
             + "\tName: "
             + m.getName()
