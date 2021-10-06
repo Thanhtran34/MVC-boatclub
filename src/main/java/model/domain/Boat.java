@@ -16,9 +16,12 @@ public class Boat {
   private static final AtomicInteger idGenerator = new AtomicInteger(1000);
 
   private String owner;
-  private double length;
-  private int id;
+  private double lengthInFeet;
+  private double lengthInMeters;
+  private int boatId;
   private BoatType type;
+
+  public Boat() {}
 
   /**
    * An instance of the Boat class.
@@ -26,11 +29,12 @@ public class Boat {
    * @param owner {Integer}
    * @param type {*}
    */
-  public Boat(String owner, BoatType type, double length) {
+  public Boat(String owner, BoatType type, double lengthInFeet) {
     this.owner = owner;
     this.type = type;
-    this.length = length;
-    this.id = idGenerator.getAndIncrement();
+    this.lengthInFeet = lengthInFeet;
+    this.lengthInMeters = getLengthInMeters();
+    this.boatId = idGenerator.getAndIncrement();
   }
 
   public String getOwner() {
@@ -38,11 +42,11 @@ public class Boat {
   }
 
   public double getLength() {
-    return length;
+    return lengthInFeet;
   }
 
   public void setLength(double length) {
-    this.length = length;
+    this.lengthInFeet = length;
   }
 
   public void setType(BoatType type) {
@@ -50,7 +54,7 @@ public class Boat {
   }
 
   public int getBoatId() {
-    return id;
+    return boatId;
   }
 
   public BoatType getType() {
@@ -59,6 +63,6 @@ public class Boat {
 
   /** Method to get length in meters. */
   public double getLengthInMeters() {
-    return this.length * 0.3048;
+    return this.lengthInFeet * 0.3048;
   }
 }

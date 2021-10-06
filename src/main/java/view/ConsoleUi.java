@@ -17,7 +17,7 @@ public class ConsoleUi implements Iconsole {
     System.out.println(
         "|                                                                                            |");
     System.out.println(
-        "|**************************** Welcome to YatchClub ⛵ ⛵ ⛵  **********************************|");
+        "|**************************** Welcome to YatchClub ⛵ ⛵ ⛵  *******************************|");
     System.out.println(
         "|                                                                                            |");
     System.out.println(
@@ -26,7 +26,7 @@ public class ConsoleUi implements Iconsole {
 
   @Override
   public void showMainMenu() {
-    System.out.println("-----------------------");
+    System.out.println("");
     System.out.println("!**** Main Menu ****!");
     System.out.println("-----------------------");
     System.out.println("1. Register new member");
@@ -89,7 +89,11 @@ public class ConsoleUi implements Iconsole {
 
   @Override
   public void quitApps() {
-    System.out.println("Yacht Club application terminated \n");
+    System.out.println(
+        "______________________________________________________________________________________________");
+    System.out.println("********* Yacht Club application terminated **********\n");
+    System.out.println(
+        "______________________________________________________________________________________________\n");
   }
 
   public String readUserInput() {
@@ -161,7 +165,7 @@ public class ConsoleUi implements Iconsole {
 
   @Override
   public void noBoats() {
-    System.out.println("Sorry, there has no boat owned by this member. Try again");
+    System.out.println("Sorry, there has no boat owned by this member.");
   }
 
   @Override

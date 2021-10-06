@@ -46,7 +46,6 @@ public class YatchClub {
           break;
         case 4:
           this.lookForMember(ui);
-          this.dataController.saveData(ui, this.members);
           break;
         case 5:
           this.deleteMember(ui);
@@ -117,7 +116,7 @@ public class YatchClub {
         compactList.append("Member Id: " + m.getMemberId() + "\n");
         compactList.append("Name: " + m.getName() + "\n");
         compactList.append("Amount of Boats: " + m.getBoats().size() + "\n");
-        compactList.append("===================================");
+        compactList.append("===================================\n");
       }
     }
     System.out.println(compactList);
@@ -133,21 +132,20 @@ public class YatchClub {
         verboseList.append("Member Id: " + m.getMemberId() + "\n");
         verboseList.append("Name: " + m.getName() + "\n");
         verboseList.append("Personal Number: " + m.getPersonalNumber() + "\n");
-        verboseList.append("Amount of Boats: " + m.getBoats().size() + "\n");
-        verboseList.append("======================================");
+        verboseList.append("======================================\n");
         int i = 1;
         LinkedList<Boat> boatsList = m.getBoats();
         if (boatsList.size() != 0) {
           for (Boat boat : boatsList) {
             verboseList.append(i++);
             verboseList.append("\t Type of Boat: " + boat.getType() + "\n");
-            verboseList.append("\t Length of Boat in Feet: " + boat.getLength() + " ft");
+            verboseList.append("\t Length of Boat in Feet: " + boat.getLength() + " ft\n");
             verboseList.append(
-                    "\t Length of Boat in Meters: " + boat.getLengthInMeters() + " meters");
-            verboseList.append("========================================");
+                "\t Length of Boat in Meters: " + boat.getLengthInMeters() + " meters\n");
+            verboseList.append("========================================\n");
           }
         }
-        verboseList.append("\n");
+        verboseList.append("----------------------------------------------------------------\n");
       }
     }
     System.out.println(verboseList);

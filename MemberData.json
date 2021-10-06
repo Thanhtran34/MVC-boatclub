@@ -1,0 +1,29 @@
+[ {
+  "name" : "mary",
+  "personalNumber" : "195603022544",
+  "memberId" : "e4717f",
+  "boats" : [ {
+    "owner" : "e4717f",
+    "lengthInMeters" : 1.24968,
+    "boatId" : 1000,
+    "type" : "KayakCanoe",
+    "length" : 4.1
+  }, {
+    "owner" : "e4717f",
+    "lengthInMeters" : 2.80416,
+    "boatId" : 1000,
+    "type" : "Motorsailer",
+    "length" : 9.2
+  } ]
+}, {
+  "name" : "katty",
+  "personalNumber" : "197504056544",
+  "memberId" : "cfa139",
+  "boats" : [ {
+    "owner" : "cfa139",
+    "lengthInMeters" : 1.5849600000000001,
+    "boatId" : 1001,
+    "type" : "Sailboat",
+    "length" : 5.2
+  } ]
+} ]
