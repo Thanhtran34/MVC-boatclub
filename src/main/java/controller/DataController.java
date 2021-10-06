@@ -2,26 +2,31 @@ package controller;
 
 import java.util.ArrayList;
 import model.domain.Member;
+import model.persistence.FileHandler;
 import model.persistence.Idatastorage;
 import view.Iconsole;
 
 /** A class to save and read data. */
 public class DataController {
+  public Idatastorage dataStorage;
+
+  public DataController() {
+    this.dataStorage = new FileHandler();
+  }
 
   /**
    * Method to save the data to the file.
    *
    * @param ui {*}
-   * @param dataStorage {*}
    * @param members {*}
    */
-  public void saveData(Iconsole ui, Idatastorage dataStorage, ArrayList<Member> members) {
-    dataStorage.saveMembers(members);
+  public void saveData(Iconsole ui, ArrayList<Member> members) {
+    this.dataStorage.saveMembers(members);
     ui.saveSuccessful();
   }
 
   /** Method to read data from the file. */
-  public ArrayList<Member> readDataFromFile(Idatastorage dataStorage) {
-    return  dataStorage.checkAllMembers();
+  public ArrayList<Member> readDataFromFile() {
+    return this.dataStorage.checkAllMembers();
   }
 }

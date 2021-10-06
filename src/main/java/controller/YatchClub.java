@@ -8,14 +8,11 @@ import java.util.LinkedList;
 import model.domain.Boat;
 import model.domain.Boat.BoatType;
 import model.domain.Member;
-import model.persistence.FileHandler;
-import model.persistence.Idatastorage;
 import view.Iconsole;
 
 /** Module for the YatchClub class. */
 public class YatchClub {
   private ArrayList<Member> members;
-  private Idatastorage dataStorage;
   private DataController dataController;
 
   /**
@@ -26,10 +23,9 @@ public class YatchClub {
   public void runApplication(Iconsole ui) throws BoatNotFound, InvalidInput, MemberNotFound {
 
     this.members = new ArrayList<>();
-    this.dataStorage = new FileHandler();
     this.dataController = new DataController();
     ui.showWelcomeMessage();
-    this.members = this.dataController.readDataFromFile(this.dataStorage);
+    this.members = this.dataController.readDataFromFile();
     int selectedItemOfMenu = 0;
     while (selectedItemOfMenu != -1) {
       ui.showMainMenu();
@@ -37,33 +33,33 @@ public class YatchClub {
       switch (selectedItemOfMenu) {
         case 1:
           this.createMember(ui);
-          this.dataController.saveData(ui, this.dataStorage, this.members);
+          this.dataController.saveData(ui, this.members);
           break;
         case 2:
           this.showListMembers(ui);
           break;
         case 3:
           this.updateMember(ui);
-          this.dataController.saveData(ui, this.dataStorage, this.members);
+          this.dataController.saveData(ui, this.members);
           break;
         case 4:
           this.lookForMember(ui);
-          this.dataController.saveData(ui, this.dataStorage, this.members);
+          this.dataController.saveData(ui, this.members);
           break;
         case 5:
           this.deleteMember(ui);
           break;
         case 6:
           this.registerBoat(ui);
-          this.dataController.saveData(ui, this.dataStorage, this.members);
+          this.dataController.saveData(ui, this.members);
           break;
         case 7:
           this.updateBoat(ui);
-          this.dataController.saveData(ui, this.dataStorage, this.members);
+          this.dataController.saveData(ui, this.members);
           break;
         case 8:
           this.deleteBoat(ui);
-          this.dataController.saveData(ui, this.dataStorage, this.members);
+          this.dataController.saveData(ui, this.members);
           break;
         case -1:
           this.quitApps(ui);
