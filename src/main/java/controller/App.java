@@ -13,7 +13,9 @@ public class App {
    */
   public static void main(String[] args) throws InvalidInput, IOException {
     view.Iconsole ui = new view.ConsoleUi();
-    controller.YatchClub controller = new controller.YatchClub();
+    //controller.YatchClub controller = new controller.YatchClub();
+    //controller.runApplication(ui);
+    controller.ClubController controller = new controller.ClubController();
     controller.runApplication(ui);
   }
 }

@@ -1,6 +1,6 @@
 [ {
-  "name" : "mary",
-  "personalNumber" : "195603022544",
+  "name" : "john",
+  "personalNumber" : "198606308577",
   "memberId" : "e4717f",
   "boats" : [ {
     "owner" : "e4717f",
@@ -16,14 +16,20 @@
     "length" : 5.8
   } ]
 }, {
-  "name" : "john",
-  "personalNumber" : "195604088799",
+  "name" : "mat",
+  "personalNumber" : "198502301655",
   "memberId" : "f17448",
   "boats" : [ {
     "owner" : "f17448",
-    "lengthInMeters" : 1.5544799999999999,
-    "boatId" : 1330,
-    "type" : "Sailboat",
-    "length" : 5.1
+    "lengthInMeters" : 2.7127200000000005,
+    "boatId" : 1334,
+    "type" : "Motorsailer",
+    "length" : 8.9
+  }, {
+    "owner" : "f17448",
+    "lengthInMeters" : 1.3716000000000002,
+    "boatId" : 1333,
+    "type" : "Motorsailer",
+    "length" : 4.5
   } ]
 } ]

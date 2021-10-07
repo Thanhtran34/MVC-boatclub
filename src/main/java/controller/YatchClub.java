@@ -354,10 +354,9 @@ public class YatchClub {
               double boatLength = ui.readInputDoub();
               b.setLength(boatLength);
               ui.proceedSucessful();
-            } else {
-              throw new BoatNotFound("Boat is not found!");
             }
           }
+          throw new BoatNotFound("Boat is not found!");
         }
       }
     } else {
@@ -394,13 +393,12 @@ public class YatchClub {
               boatList.remove(b);
               ui.proceedSucessful();
               return;
-            } else {
-              // Boat not found
-              throw new BoatNotFound("Boat is not found!");
             }
           }
         }
       }
+      // Boat not found
+      throw new BoatNotFound("Boat is not found!");
     } else {
 
       // Member not found
