@@ -160,7 +160,7 @@ public class ConsoleUi implements Iconsole {
 
   @Override
   public void chooseBoatLength() {
-    System.out.println("Please enter boat length: ");
+    System.out.println("Please enter boat length in feet (Format: 0.0): ");
   }
 
   @Override

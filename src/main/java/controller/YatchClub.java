@@ -48,6 +48,7 @@ public class YatchClub {
           break;
         case 5:
           this.deleteMember(ui);
+          this.dataController.saveData(ui, this.members);
           break;
         case 6:
           this.registerBoat(ui);
@@ -333,40 +334,33 @@ public class YatchClub {
     this.showCompactList(ui, this.members);
     ui.chooseMemberId();
     String memberId = ui.readUserInput();
-
     if (this.validMemberId(memberId)) {
 
       for (Member m : this.members) {
 
         if (m.getMemberId().equals(memberId)) {
-          LinkedList<Boat> boatList = m.getBoats();
-          if (boatList.size() == 0) {
+          if (m.getBoats().size() == 0) {
             // No boats registered to member
             ui.noBoats();
-            return;
           }
           // Select boat
           int boatId = this.getBoatId(ui, m);
+          LinkedList<Boat> boatList = m.getBoats();
           for (Boat b : boatList) {
             if (b.getBoatId() == boatId) {
-
-              // Update boat
               b.setType(this.getBoatTypes(ui));
               ui.chooseBoatLength();
               double boatLength = ui.readInputDoub();
               b.setLength(boatLength);
               ui.proceedSucessful();
-              return;
+            } else {
+              throw new BoatNotFound("Boat is not found!");
             }
           }
-          // Boat not found
-          throw new BoatNotFound("Boat is not found!");
-        } else {
-
-          // Member not found
-          throw new MemberNotFound("Member is not found!");
         }
       }
+    } else {
+      throw new MemberNotFound("Member is not found!");
     }
   }
 
@@ -399,16 +393,17 @@ public class YatchClub {
               boatList.remove(b);
               ui.proceedSucessful();
               return;
+            } else {
+              // Boat not found
+              throw new BoatNotFound("Boat is not found!");
             }
           }
-          // Boat not found
-          throw new BoatNotFound("Boat is not found!");
-        } else {
-
-          // Member not found
-          throw new MemberNotFound("Member is not found!");
         }
       }
+    } else {
+
+      // Member not found
+      throw new MemberNotFound("Member is not found!");
     }
   }
 

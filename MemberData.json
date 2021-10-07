@@ -4,22 +4,10 @@
   "memberId" : "e4717f",
   "boats" : [ {
     "owner" : "e4717f",
-    "lengthInMeters" : 2.80416,
-    "boatId" : 1000,
-    "type" : "Motorsailer",
-    "length" : 9.2
-  }, {
-    "owner" : "e4717f",
-    "lengthInMeters" : 0.9753600000000001,
-    "boatId" : 1003,
-    "type" : "Sailboat",
-    "length" : 3.2
-  }, {
-    "owner" : "e4717f",
-    "lengthInMeters" : 1.09728,
+    "lengthInMeters" : 1.6764000000000001,
     "boatId" : 1004,
-    "type" : "Other",
-    "length" : 3.6
+    "type" : "KayakCanoe",
+    "length" : 5.5
   }, {
     "owner" : "e4717f",
     "lengthInMeters" : 1.76784,
@@ -28,20 +16,20 @@
     "length" : 5.8
   } ]
 }, {
-  "name" : "katty",
-  "personalNumber" : "197504056544",
-  "memberId" : "cfa139",
+  "name" : "Matt",
+  "personalNumber" : "197605068457",
+  "memberId" : "acf186",
   "boats" : [ {
-    "owner" : "cfa139",
-    "lengthInMeters" : 1.5849600000000001,
-    "boatId" : 1001,
-    "type" : "Sailboat",
-    "length" : 5.2
+    "owner" : "acf186",
+    "lengthInMeters" : 0.0,
+    "boatId" : 1325,
+    "type" : "KayakCanoe",
+    "length" : 0.0
   }, {
-    "owner" : "cfa139",
-    "lengthInMeters" : 0.762,
-    "boatId" : 1004,
+    "owner" : "acf186",
+    "lengthInMeters" : 1.70688,
+    "boatId" : 1332,
     "type" : "Sailboat",
-    "length" : 2.5
+    "length" : 5.6
   } ]
 } ]
