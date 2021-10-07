@@ -29,12 +29,14 @@ public class ConsoleUi implements Iconsole {
     System.out.println("");
     System.out.println("!**** Main Menu ****!");
     System.out.println("-----------------------");
+    System.out.println("_________Member________");
     System.out.println("1. Register new member");
     System.out.println("2. List members");
     System.out.println("3. Update member information");
     System.out.println("4. View member");
     System.out.println("5. Delete member");
     System.out.println("------------------------");
+    System.out.println("_________Boat________");
     System.out.println("6. Register boat");
     System.out.println("7. Update boat information\n");
     System.out.println("8. Delete boat");
@@ -91,7 +93,7 @@ public class ConsoleUi implements Iconsole {
   public void quitApps() {
     System.out.println(
         "______________________________________________________________________________________________");
-    System.out.println("********* Yacht Club application terminated **********\n");
+    System.out.println("******************* Yacht Club application terminated **************************\n");
     System.out.println(
         "______________________________________________________________________________________________\n");
   }

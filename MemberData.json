@@ -4,20 +4,20 @@
   "memberId" : "e4717f",
   "boats" : [ {
     "owner" : "e4717f",
-    "lengthInMeters" : 1.6764000000000001,
-    "boatId" : 1004,
-    "type" : "KayakCanoe",
-    "length" : 5.5
-  }, {
-    "owner" : "e4717f",
     "lengthInMeters" : 1.76784,
     "boatId" : 1331,
     "type" : "Sailboat",
     "length" : 5.8
+  }, {
+    "owner" : "e4717f",
+    "lengthInMeters" : 1.6459200000000003,
+    "boatId" : 1330,
+    "type" : "KayakCanoe",
+    "length" : 5.4
   } ]
 }, {
-  "name" : "mat",
-  "personalNumber" : "198502301655",
+  "name" : "Jenny",
+  "personalNumber" : "198605063211",
   "memberId" : "f17448",
   "boats" : [ {
     "owner" : "f17448",
@@ -27,9 +27,9 @@
     "length" : 8.9
   }, {
     "owner" : "f17448",
-    "lengthInMeters" : 1.3716000000000002,
-    "boatId" : 1333,
+    "lengthInMeters" : 0.70104,
+    "boatId" : 1328,
     "type" : "Motorsailer",
-    "length" : 4.5
+    "length" : 2.3
   } ]
 } ]
