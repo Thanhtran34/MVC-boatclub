@@ -16,20 +16,14 @@
     "length" : 5.8
   } ]
 }, {
-  "name" : "Matt",
-  "personalNumber" : "197605068457",
-  "memberId" : "acf186",
+  "name" : "john",
+  "personalNumber" : "195604088799",
+  "memberId" : "f17448",
   "boats" : [ {
-    "owner" : "acf186",
-    "lengthInMeters" : 0.0,
-    "boatId" : 1325,
-    "type" : "KayakCanoe",
-    "length" : 0.0
-  }, {
-    "owner" : "acf186",
-    "lengthInMeters" : 1.70688,
-    "boatId" : 1332,
+    "owner" : "f17448",
+    "lengthInMeters" : 1.5544799999999999,
+    "boatId" : 1330,
     "type" : "Sailboat",
-    "length" : 5.6
+    "length" : 5.1
   } ]
 } ]

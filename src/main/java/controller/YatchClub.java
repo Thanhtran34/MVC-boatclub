@@ -258,10 +258,11 @@ public class YatchClub {
     ui.chooseMemberId();
     String memberId = ui.readUserInput();
     if (this.validMemberId(memberId)) {
-      for (Member m : this.members) {
-        if (m.getMemberId().equals(memberId)) {
-          this.members.remove(m);
+      for (int i = 0; i < this.members.size(); i++) {
+        if (this.members.get(i).getMemberId().equals(memberId)) {
+          this.members.remove(i);
           ui.proceedSucessful();
+          return;
         }
       }
     } else {
