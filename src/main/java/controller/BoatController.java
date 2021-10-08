@@ -12,7 +12,7 @@ import view.Iconsole;
  * BoatController class which works with all actions with boat.
  */
 public class BoatController implements IboatController {
-  public ImemberController memberController = new MemberController();
+  private ImemberController memberController = new MemberController();
 
   @Override
   public void registerBoat(Iconsole ui, ArrayList<Member> members) throws MemberNotFound {

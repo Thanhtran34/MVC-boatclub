@@ -142,7 +142,7 @@ public class MemberController implements ImemberController {
   @Override
   public void showCompactList(Iconsole ui, ArrayList<Member> members) {
     StringBuffer compactList = new StringBuffer();
-    System.out.println("---------------------Compact List of  all members----------------------\n");
+    System.out.println("---------------------COMPACT LIST OF ALL MEMBERS----------------------\n");
     if (members.size() != 0) {
       for (Member m : members) {
         compactList.append("Member Id: " + m.getMemberId() + "\n");
@@ -158,7 +158,7 @@ public class MemberController implements ImemberController {
   public void showVerboseList(Iconsole ui, ArrayList<Member> members) {
     StringBuffer verboseList = new StringBuffer();
     System.out.println(
-        "--------------------------Verbose List of all members--------------------------\n");
+        "--------------------------VERBOSE LIST OF ALL MEMBERS--------------------------\n");
     if (members.size() != 0) {
       for (Member m : members) {
         verboseList.append("Member Id: " + m.getMemberId() + "\n");

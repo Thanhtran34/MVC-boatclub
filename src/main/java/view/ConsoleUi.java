@@ -27,7 +27,7 @@ public class ConsoleUi implements Iconsole {
   @Override
   public void showMainMenu() {
     System.out.println("");
-    System.out.println("!**** Main Menu ****!");
+    System.out.println("!**** MAIN MENU ****!");
     System.out.println("-----------------------");
     System.out.println("_________Member________");
     System.out.println("1. Register new member");
@@ -93,7 +93,7 @@ public class ConsoleUi implements Iconsole {
   public void quitApps() {
     System.out.println(
         "______________________________________________________________________________________________");
-    System.out.println("******************* Yacht Club application terminated **************************\n");
+    System.out.println("******************* Yacht Club application TERMINATED **************************\n");
     System.out.println(
         "______________________________________________________________________________________________\n");
   }

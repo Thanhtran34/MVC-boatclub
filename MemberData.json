@@ -8,12 +8,6 @@
     "boatId" : 1331,
     "type" : "Sailboat",
     "length" : 5.8
-  }, {
-    "owner" : "e4717f",
-    "lengthInMeters" : 1.6459200000000003,
-    "boatId" : 1330,
-    "type" : "KayakCanoe",
-    "length" : 5.4
   } ]
 }, {
   "name" : "Jenny",
@@ -27,14 +21,20 @@
     "length" : 8.9
   }, {
     "owner" : "f17448",
-    "lengthInMeters" : 0.70104,
+    "lengthInMeters" : 1.7983200000000001,
     "boatId" : 1328,
-    "type" : "Motorsailer",
-    "length" : 2.3
+    "type" : "Sailboat",
+    "length" : 5.9
   } ]
 }, {
-  "name" : "jack",
-  "personalNumber" : "199208096788",
-  "memberId" : "14881c",
-  "boats" : [ ]
+  "name" : "jonnny",
+  "personalNumber" : "199805062311",
+  "memberId" : "e3f83d",
+  "boats" : [ {
+    "owner" : "e3f83d",
+    "lengthInMeters" : 0.36576000000000003,
+    "boatId" : 1326,
+    "type" : "Sailboat",
+    "length" : 1.2
+  } ]
 } ]
