@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import model.domain.Member;
 
-/** Module for the FileHandler class. */
+/** The FileHandler class to read and save data to file. */
 public class FileHandler implements IdataStorage {
   private String fileName = "MemberData.json";
 

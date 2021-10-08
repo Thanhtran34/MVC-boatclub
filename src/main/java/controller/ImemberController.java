@@ -1,8 +1,8 @@
 package controller;
 
+import controller.exception.MemberNotFound;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import controller.exception.MemberNotFound;
 import model.domain.Boat;
 import model.domain.Member;
 import view.Iconsole;

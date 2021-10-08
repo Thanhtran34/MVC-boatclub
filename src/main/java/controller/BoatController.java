@@ -1,13 +1,16 @@
 package controller;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
 import controller.exception.BoatNotFound;
 import controller.exception.MemberNotFound;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import model.domain.Boat;
 import model.domain.Member;
 import view.Iconsole;
 
+/**
+ * BoatController class which works with all actions with boat.
+ */
 public class BoatController implements IboatController {
   public ImemberController memberController = new MemberController();
 
@@ -32,6 +35,7 @@ public class BoatController implements IboatController {
             if (boat.getLength() == boatLength && boat.getType() == type) {
               // Boat found and not unique
               ui.duplicateInformation();
+              return;
             }
           }
           // register boat to its owner
@@ -60,6 +64,7 @@ public class BoatController implements IboatController {
           if (m.getBoats().size() == 0) {
             // No boats registered to member
             ui.noBoats();
+            return;
           }
           // Select boat
           int boatId = this.getBoatId(ui, m, members);
@@ -101,6 +106,7 @@ public class BoatController implements IboatController {
           if (boatList.size() == 0) {
 
             ui.noBoats();
+            return;
           }
           // Select boat
           int boatId = getBoatId(ui, m, members);

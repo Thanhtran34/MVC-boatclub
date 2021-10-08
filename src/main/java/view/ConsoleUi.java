@@ -2,7 +2,7 @@ package view;
 
 import java.util.Scanner;
 
-/** Module for the ConsoleUi class. */
+/** The ConsoleUi class to show message and read user input. */
 public class ConsoleUi implements Iconsole {
   private Scanner scan;
 

@@ -32,4 +32,9 @@
     "type" : "Motorsailer",
     "length" : 2.3
   } ]
+}, {
+  "name" : "jack",
+  "personalNumber" : "199208096788",
+  "memberId" : "14881c",
+  "boats" : [ ]
 } ]

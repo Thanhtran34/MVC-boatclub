@@ -3,7 +3,7 @@ package model.domain;
 import java.util.LinkedList;
 import java.util.UUID;
 
-/** Module for the Member class. */
+/** The Member class to work with member's data. */
 public class Member {
 
   private String name;

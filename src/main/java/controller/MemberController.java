@@ -1,8 +1,8 @@
 package controller;
 
+import controller.exception.MemberNotFound;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import controller.exception.MemberNotFound;
 import model.domain.Boat;
 import model.domain.Member;
 import view.Iconsole;
@@ -23,6 +23,7 @@ public class MemberController implements ImemberController {
     if (memberPersonalNumber.matches("\\d+") && memberPersonalNumber.length() == 12) {
       if (this.checkMemberExistence(memberName, memberPersonalNumber, members)) {
         ui.duplicateInformation();
+        return;
       } else {
         members.add(new Member(memberName, memberPersonalNumber));
       }
@@ -50,6 +51,7 @@ public class MemberController implements ImemberController {
           ui.choosePersonalNo();
           m.changePersonNo(ui.readUserInput());
           ui.proceedSucessful();
+          return;
         }
       }
     } else {
@@ -71,6 +73,7 @@ public class MemberController implements ImemberController {
         if (m.getMemberId().equals(memberId)) {
           // Print out member information
           this.showMemberInfo(ui, m, members);
+          return;
         }
       }
 

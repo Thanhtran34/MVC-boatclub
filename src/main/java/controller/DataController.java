@@ -9,7 +9,7 @@ import view.Iconsole;
 
 /** A class to save and read data. */
 public class DataController {
-  public IdataStorage dataStorage;
+  private IdataStorage dataStorage;
 
   public DataController() {
     this.dataStorage = new FileHandler();

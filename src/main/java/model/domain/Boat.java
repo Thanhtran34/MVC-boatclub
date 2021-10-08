@@ -2,7 +2,7 @@ package model.domain;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-/** Module for the Boat class. */
+/** The Boat class to work with boat's data. */
 public class Boat {
   /** Enumeration for boat type. */
   public enum BoatType {
