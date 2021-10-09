@@ -18,8 +18,8 @@ public class DataController {
   /**
    * Method to save the data to the file.
    *
-   * @param ui {*}
-   * @param members {*}
+   * @param ui {*} console ui instance.
+   * @param members {*} the list of members.
    */
   public void saveData(Iconsole ui, ArrayList<Member> members) throws IOException {
     this.dataStorage.saveMembers(members);

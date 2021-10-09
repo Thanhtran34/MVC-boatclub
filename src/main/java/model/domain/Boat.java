@@ -26,8 +26,9 @@ public class Boat {
   /**
    * An instance of the Boat class.
    *
-   * @param owner {Integer}
-   * @param type {*}
+   * @param owner {String} - the owner of the boat-memberId.
+   * @param type {*} the type of the boat.
+   * @param lengthInFeet {*} the length in feet of the boat.
    */
   public Boat(String owner, BoatType type, double lengthInFeet) {
     this.owner = owner;
