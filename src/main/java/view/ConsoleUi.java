@@ -76,17 +76,17 @@ public class ConsoleUi implements Iconsole {
 
   @Override
   public void registerBoat() {
-    System.out.println("Register a boat for a member");
+    System.out.println("Register a boat for a member: ");
   }
 
   @Override
   public void updateBoat() {
-    System.out.println("Update boat information");
+    System.out.println("Update boat information: ");
   }
 
   @Override
   public void deleteBoat() {
-    System.out.println("Delete a boat");
+    System.out.println("Delete a boat of one member: ");
   }
 
   @Override
