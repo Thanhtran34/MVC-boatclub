@@ -142,7 +142,7 @@ public class BoatController implements IboatController {
 
     counter = ui.readInputInt() - 1;
 
-    // Preventing illegal values
+    // Preventing wrong choice for boat type 
     if (counter > 3) {
       counter = 0;
     }
