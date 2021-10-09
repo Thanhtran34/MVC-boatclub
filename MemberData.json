@@ -1,6 +1,6 @@
 [ {
-  "name" : "john",
-  "personalNumber" : "198606308577",
+  "name" : "jackson",
+  "personalNumber" : "196503025644",
   "memberId" : "e4717f",
   "boats" : [ {
     "owner" : "e4717f",
@@ -19,12 +19,6 @@
     "boatId" : 1334,
     "type" : "Motorsailer",
     "length" : 8.9
-  }, {
-    "owner" : "f17448",
-    "lengthInMeters" : 1.7983200000000001,
-    "boatId" : 1328,
-    "type" : "Sailboat",
-    "length" : 5.9
   } ]
 }, {
   "name" : "jonnny",
