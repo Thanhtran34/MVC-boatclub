@@ -85,7 +85,7 @@ public class MemberController implements ImemberController {
   @Override
   public void showMemberInfo(Iconsole ui, Member m, ArrayList<Member> members) {
     ui.printMessage(
-        "MemberID: "
+        "Member ID: "
             + m.getMemberId()
             + "\tName: "
             + m.getName()
@@ -199,7 +199,7 @@ public class MemberController implements ImemberController {
                 + boat.getBoatId()
                 + "\tType: "
                 + boat.getType()
-                + "\t Length: "
+                + "\t Length in Feet: "
                 + boat.getLength());
       }
     }

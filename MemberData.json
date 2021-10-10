@@ -8,6 +8,12 @@
     "boatId" : 1331,
     "type" : "Sailboat",
     "length" : 5.8
+  }, {
+    "owner" : "e4717f",
+    "lengthInMeters" : 1.3716000000000002,
+    "boatId" : 1330,
+    "type" : "KayakCanoe",
+    "length" : 4.5
   } ]
 }, {
   "name" : "Jenny",
