@@ -10,7 +10,7 @@ The application uses the model-view-controller (MVC) architectural pattern. The 
 ### Class Diagram
 The final class diagram for the app.
 
-![class diagram](img/class-diagram.png)
+![class diagram](img/class-diagram-final.png)
 
 ### Sequence Diagram
 The sequence diagram for the scenario when a new member is created/registered.
