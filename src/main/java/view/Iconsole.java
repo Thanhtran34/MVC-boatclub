@@ -51,4 +51,6 @@ public interface Iconsole {
   void noBoats();
 
   void saveSuccessful();
+
+  void printList(StringBuffer list);
 }

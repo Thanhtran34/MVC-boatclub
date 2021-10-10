@@ -142,7 +142,7 @@ public class MemberController implements ImemberController {
   @Override
   public void showCompactList(Iconsole ui, ArrayList<Member> members) {
     StringBuffer compactList = new StringBuffer();
-    System.out.println("---------------------COMPACT LIST OF ALL MEMBERS----------------------\n");
+    ui.printMessage("---------------------COMPACT LIST OF ALL MEMBERS----------------------\n");
     if (members.size() != 0) {
       for (Member m : members) {
         compactList.append("Member Id: " + m.getMemberId() + "\n");
@@ -151,13 +151,13 @@ public class MemberController implements ImemberController {
         compactList.append("===================================\n");
       }
     }
-    System.out.println(compactList);
+    ui.printList(compactList);
   }
 
   @Override
   public void showVerboseList(Iconsole ui, ArrayList<Member> members) {
     StringBuffer verboseList = new StringBuffer();
-    System.out.println(
+    ui.printMessage(
         "--------------------------VERBOSE LIST OF ALL MEMBERS--------------------------\n");
     if (members.size() != 0) {
       for (Member m : members) {
@@ -180,7 +180,7 @@ public class MemberController implements ImemberController {
         verboseList.append("----------------------------------------------------------------\n");
       }
     }
-    System.out.println(verboseList);
+    ui.printList(verboseList);
   }
 
   @Override

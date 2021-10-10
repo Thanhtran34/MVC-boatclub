@@ -93,7 +93,8 @@ public class ConsoleUi implements Iconsole {
   public void quitApps() {
     System.out.println(
         "______________________________________________________________________________________________");
-    System.out.println("******************* Yacht Club application TERMINATED **************************\n");
+    System.out.println(
+        "******************* Yacht Club application TERMINATED **************************\n");
     System.out.println(
         "______________________________________________________________________________________________\n");
   }
@@ -173,5 +174,10 @@ public class ConsoleUi implements Iconsole {
   @Override
   public void saveSuccessful() {
     System.out.println("Data has been saved.");
+  }
+
+  @Override
+  public void printList(StringBuffer list) {
+    System.out.println(list);
   }
 }
