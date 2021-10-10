@@ -8,12 +8,12 @@ The application uses the model-view-controller (MVC) architectural pattern. The 
 
 ## Detailed Design
 ### Class Diagram
-The final class diagram for the app.
+The final class diagram for the application implementation.
 
 ![class diagram](img/class-diagram-final.png)
 
 ### Sequence Diagram
-The sequence diagram for the scenario when a new member is created/registered.
+The sequence diagram for the scenario when a new member is created/registered. 
 
 
 ![sequence diagram -create Member](img/sequence-diagram.png)
