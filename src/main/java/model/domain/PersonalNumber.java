@@ -8,7 +8,7 @@ public class PersonalNumber {
     this.personnumber = personnumber;
   }
 
-  public String getPersonnumber() {
+  public String getNumber() {
     return personnumber;
   }
 

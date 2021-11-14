@@ -1,5 +1,6 @@
 package model.domain;
 
-public class BoatClub {
-  
+/** An interface for BoatClub element. */
+public interface BoatClub {
+  void accept(BoatClubVisitor visitor);
 }

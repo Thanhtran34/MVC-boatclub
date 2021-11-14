@@ -1,9 +1,10 @@
 package model.domain;
 
-/**
- * A class for BoatClub Visitor
- * 
- */
-public class BoatClubVisitor {
-  
+/** An interface for BoatClub Visitor. */
+public interface BoatClubVisitor {
+  void visit(Member m);
+
+  void postVisit(Member m);
+
+  void visit(Boat b);
 }

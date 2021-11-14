@@ -1,54 +1,44 @@
 package model.domain;
 
-import java.util.LinkedList;
-import java.util.UUID;
+import java.util.ArrayList;
 
 /** The Member class to work with member's data. */
-public class Member {
+public class Member extends Person implements BoatClub {
 
-  private String name;
-  private String personalNumber;
-  private String memberId;
-  private LinkedList<Boat> boatList = new LinkedList<>();
-
-  /** An default instance of Member class. */
   public Member() {}
 
+  private ArrayList<Boat> ownedBoats;
+  private MemberId id;
+
+  Member(Name name, PersonalNumber pnr) {
+    super(name, pnr);
+    this.id = new MemberId();
+    ownedBoats = new ArrayList<>();
+    ownedBoats.add(new Boat());
+  }
+
+  Member(Person person) {
+    super(person.getName(), person.getPersonalNumber());
+    this.id = new MemberId();
+    ownedBoats = new ArrayList<>();
+    ownedBoats.add(new Boat());
+  }
+
   /**
-   * An instance of Member class.
+   * Get the unique member id.
    *
-   * @param name {string} - name of member.
-   * @param personnumber {long} - personal number of member.
+   * @return the member id.
    */
-  public Member(String name, String personnumber) {
-    this.name = name;
-    this.personalNumber = personnumber;
-    // create unique id with 6 characters
-    UUID id = UUID.randomUUID();
-    this.memberId = id.toString().substring(0, 6);
+  public MemberId getMemberId() {
+    return id;
   }
 
-  public String getName() {
-    return name;
-  }
-
-  public String getMemberId() {
-    return memberId;
-  }
-
-  public String getPersonalNumber() {
-    return personalNumber;
-  }
-
-  public LinkedList<Boat> getBoats() {
-    return boatList;
-  }
-
-  public void changeName(String name) {
-    this.name = name;
-  }
-
-  public void changePersonNo(String pernum) {
-    this.personalNumber = pernum;
+  @Override
+  public void accept(BoatClubVisitor v) {
+    v.visit(this);
+    for (Boat boat : ownedBoats) {
+      boat.accept(v);
+    }
+    v.postVisit(this);
   }
 }
