@@ -4,6 +4,8 @@ package model.domain;
 public class PersonalNumber {
   private String personnumber;
 
+  public PersonalNumber() {};
+
   public PersonalNumber(String personnumber) {
     this.personnumber = personnumber;
   }

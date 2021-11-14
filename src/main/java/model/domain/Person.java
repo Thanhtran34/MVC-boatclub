@@ -5,6 +5,8 @@ public class Person {
   private Name name;
   private PersonalNumber pernum;
 
+  public Person() {};
+
   public Person(Name name, PersonalNumber pernum) {
     this.name = name;
     this.pernum = pernum;
