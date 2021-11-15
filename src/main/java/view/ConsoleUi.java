@@ -1,16 +1,53 @@
 package view;
 
-import java.util.Scanner;
+import model.domain.MemberId;
+import model.domain.Name;
+import model.domain.Person;
+import model.domain.PersonalNumber;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 
 /** The ConsoleUi class to show message and read user input. */
-public class ConsoleUi implements Iconsole {
-  private Scanner scan;
-
-  public ConsoleUi() {
-    scan = new Scanner(System.in);
+public class ConsoleUi {
+  /** Represents the actions in the main menu. */
+  public enum MainMenuAction {
+    LIST_ALL_MEMBERS,
+    ADD_NEW_MEMBER,
+    REMOVE_MEMBER,
+    QUIT
   }
 
-  @Override
+  // }
+
+  /**
+   * Presents the application main menu.
+   *
+   * @return The otpion the user chooses.
+   */
+  public MainMenuAction showMainMenu() {
+    this.showWelcomeMessage();
+    System.out.println("Main menu");
+    System.out.println("1. Add a new member.");
+    System.out.println("2. List all members.");
+    System.out.println("3. Remove a member.");
+
+    System.out.println("q. to quit.");
+
+    String kbd = readInput();
+    if (kbd.equals("2")) {
+      return MainMenuAction.LIST_ALL_MEMBERS;
+    } else if (kbd.equals("1")) {
+      return MainMenuAction.ADD_NEW_MEMBER;
+    } else if (kbd.equals("3")) {
+      return MainMenuAction.REMOVE_MEMBER;
+    }
+
+    return MainMenuAction.QUIT;
+  }
+
   public void showWelcomeMessage() {
     System.out.println(
         "|____________________________________________________________________________________________|");
@@ -24,160 +61,45 @@ public class ConsoleUi implements Iconsole {
         "|____________________________________________________________________________________________|");
   }
 
-  @Override
-  public void showMainMenu() {
-    System.out.println("");
-    System.out.println("!**** MAIN MENU ****!");
-    System.out.println("-----------------------");
-    System.out.println("_________Member________");
-    System.out.println("1. Register new member");
-    System.out.println("2. List members");
-    System.out.println("3. Update member information");
-    System.out.println("4. View member");
-    System.out.println("5. Delete member");
-    System.out.println("------------------------");
-    System.out.println("_________Boat________");
-    System.out.println("6. Register boat");
-    System.out.println("7. Update boat information\n");
-    System.out.println("8. Delete boat");
-    System.out.println("------------------------");
-    System.out.println("-1. Quit\n");
-    System.out.println("------------------------");
-    System.out.print("Enter your choice and press enter:\n");
+  /**
+   * Presents the interface for creating a new member.
+   *
+   * @return A person with all information set.
+   */
+  public Person presentNewMemberForm() {
+    System.out.println("Add new member");
+    System.out.println("Enter member name:");
+    String name = readInput();
+
+    System.out.println("Enter member personal number:");
+    String pnr = readInput();
+
+    return new Person(new Name(name), new PersonalNumber(pnr));
   }
 
-  @Override
-  public void createMember() {
-    System.out.println("Register new member: ");
-  }
-
-  @Override
-  public void updateMember() {
-    System.out.println("Update an existing member: ");
-  }
-
-  @Override
-  public void lookForOneMember() {
-    System.out.println("Check for a specific member: ");
-  }
-
-  @Override
-  public void listMembers() {
-    System.out.println("Enter your choice for a specific list");
-    System.out.println("1. Compact list");
-    System.out.println("2. Verbose List");
-    System.out.print("Enter your choice and press enter:\n");
-  }
-
-  @Override
-  public void deleteMember() {
-    System.out.println("Delete a member\n");
-  }
-
-  @Override
-  public void registerBoat() {
-    System.out.println("Register a boat for a member: ");
-  }
-
-  @Override
-  public void updateBoat() {
-    System.out.println("Update boat information: ");
-  }
-
-  @Override
-  public void deleteBoat() {
-    System.out.println("Delete a boat of one member: ");
-  }
-
-  @Override
-  public void quitApps() {
-    System.out.println(
-        "______________________________________________________________________________________________");
-    System.out.println(
-        "******************* Yacht Club application TERMINATED **************************\n");
-    System.out.println(
-        "______________________________________________________________________________________________\n");
-  }
-
-  public String readUserInput() {
-    return scan.nextLine();
-  }
-
-  @Override
-  public int readInputInt() {
+  public String readInput() {
     try {
-      return Integer.parseInt(this.readUserInput());
-    } catch (NumberFormatException | NullPointerException e) {
-      return 0;
+      BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in, "Cp850"));
+
+      try {
+        return keyboard.readLine();
+      } catch (IOException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+
+    } catch (UnsupportedEncodingException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
     }
+
+    return "";
   }
 
-  @Override
-  public double readInputDoub() {
-    try {
-      return Double.parseDouble(this.readUserInput());
-    } catch (NumberFormatException | NullPointerException e) {
-      return 0;
-    }
-  }
+  public String zeroPadd(MemberId id) {
+    String[] zeroPadding = {"X", "00000", "0000", "000", "00", "0", ""};
+    String strId = id.getMemberId();
 
-  @Override
-  public void printMessage(String message) {
-    System.out.println(message);
-  }
-
-  @Override
-  public void proceedSucessful() {
-    System.out.println("Action completed!");
-  }
-
-  @Override
-  public void duplicateInformation() {
-    System.out.println("Information is duplicated!");
-  }
-
-  @Override
-  public void chooseBoat() {
-    System.out.println("Please enter boat ID: ");
-  }
-
-  @Override
-  public void chooseName() {
-    System.out.println("Please enter your name: ");
-  }
-
-  @Override
-  public void choosePersonalNo() {
-    System.out.println("Please enter your personal number (Format: YYYYMMDDXXXX): ");
-  }
-
-  @Override
-  public void chooseMemberId() {
-    System.out.println("Please enter your memberID: ");
-  }
-
-  @Override
-  public void chooseBoatType() {
-    System.out.println("Please enter boat type: ");
-  }
-
-  @Override
-  public void chooseBoatLength() {
-    System.out.println("Please enter boat length in feet (Format: 0.0): ");
-  }
-
-  @Override
-  public void noBoats() {
-    System.out.println("Sorry, there has no boat owned by this member.");
-  }
-
-  @Override
-  public void saveSuccessful() {
-    System.out.println("Data has been saved.");
-  }
-
-  @Override
-  public void printList(StringBuffer list) {
-    System.out.println(list);
+    return zeroPadding[strId.length()] + strId;
   }
 }

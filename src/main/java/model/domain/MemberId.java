@@ -6,8 +6,10 @@ import java.util.UUID;
 public class MemberId {
   private String memberId;
 
-  public MemberId() {
+  public MemberId() {}
+
+  public String getMemberId() {
     UUID id = UUID.randomUUID();
-    this.memberId = id.toString().substring(0, 6);
+    return this.memberId = id.toString().substring(0, 6);
   }
 }
