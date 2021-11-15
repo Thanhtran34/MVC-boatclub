@@ -8,8 +8,11 @@ public class Member extends Person implements BoatClub {
   private MemberId id;
 
   public Member() {}
-  ;
 
+  /**
+   * An instance of Member class.
+   *
+   */
   public Member(Name name, PersonalNumber pernum) {
     super(name, pernum);
     this.id = new MemberId();
@@ -17,6 +20,10 @@ public class Member extends Person implements BoatClub {
     boatList.add(new Boat());
   }
 
+  /**
+   * Another instance of Member class.
+   *
+   */
   public Member(Person person) {
     super(person.getName(), person.getPersonalNumber());
     this.id = new MemberId();

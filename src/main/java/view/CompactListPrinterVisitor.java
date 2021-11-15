@@ -14,13 +14,13 @@ public class CompactListPrinterVisitor implements BoatClubVisitor {
   }
 
   @Override
-  public void postVisit(Member m) {
-    numberOfBoats++;
-  }
-
-  @Override
   public void visit(Member member) {
     System.out.println(
         "A member: " + member.getName() + "\n" + " Number of boats: " + numberOfBoats);
+  }
+
+  @Override
+  public void postVisit(Member m) {
+    numberOfBoats++;
   }
 }

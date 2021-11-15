@@ -1,14 +1,21 @@
 package model.domain;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import model.persistence.FileHandler;
+import model.persistence.IdataStorage;
 
 /** A class for CRUD functions with member's data and check if id is unique. */
 public class MemberRegistry implements BoatClub {
   private ArrayList<Member> memberList;
+  private IdataStorage dataStorage;
 
   /** Initializing constructor. */
-  public MemberRegistry() {
+  public MemberRegistry() throws IOException {
     memberList = new ArrayList();
+    dataStorage = new FileHandler();
+    dataStorage.checkAllMembers();
+    dataStorage.saveMembers(memberList);
   }
 
   /**

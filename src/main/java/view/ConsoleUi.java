@@ -1,14 +1,13 @@
 package view;
 
-import model.domain.MemberId;
-import model.domain.Name;
-import model.domain.Person;
-import model.domain.PersonalNumber;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import model.domain.MemberId;
+import model.domain.Name;
+import model.domain.Person;
+import model.domain.PersonalNumber;
 
 /** The ConsoleUi class to show message and read user input. */
 public class ConsoleUi {
@@ -19,8 +18,6 @@ public class ConsoleUi {
     REMOVE_MEMBER,
     QUIT
   }
-
-  // }
 
   /**
    * Presents the application main menu.
@@ -48,6 +45,10 @@ public class ConsoleUi {
     return MainMenuAction.QUIT;
   }
 
+  /**
+   * Method to show welcome message.
+   *
+   */
   public void showWelcomeMessage() {
     System.out.println(
         "|____________________________________________________________________________________________|");
@@ -77,6 +78,10 @@ public class ConsoleUi {
     return new Person(new Name(name), new PersonalNumber(pnr));
   }
 
+  /**
+   * Method to read input from keyboard.
+   *
+   */
   public String readInput() {
     try {
       BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in, "Cp850"));
@@ -96,6 +101,10 @@ public class ConsoleUi {
     return "";
   }
 
+  /**
+   * Method to create member id.
+   *
+   */
   public String zeroPadd(MemberId id) {
     String[] zeroPadding = {"X", "00000", "0000", "000", "00", "0", ""};
     String strId = id.getMemberId();

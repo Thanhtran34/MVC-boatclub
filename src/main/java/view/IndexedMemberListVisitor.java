@@ -11,6 +11,9 @@ public class IndexedMemberListVisitor implements BoatClubVisitor {
   ArrayList<Member> members = new ArrayList<>();
 
   @Override
+  public void visit(Boat boat) {}
+
+  @Override
   public void visit(Member member) {
 
     System.out.println("" + ix + " Name: " + member.getName());
@@ -20,11 +23,12 @@ public class IndexedMemberListVisitor implements BoatClubVisitor {
   }
 
   @Override
-  public void visit(Boat boat) {}
-
-  @Override
   public void postVisit(Member member) {}
 
+  /**
+   * Method to get member to delete.
+   *
+   */
   public Member getMemberToRemove(ConsoleUi ui) {
     System.out.println("Enter the number of the memmber to remove");
     String number = ui.readInput();
