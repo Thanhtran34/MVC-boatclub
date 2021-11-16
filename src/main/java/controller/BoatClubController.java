@@ -2,10 +2,7 @@ package controller;
 
 import model.domain.Member;
 import model.domain.MemberRegistry;
-import model.domain.Person;
-import view.CompactListPrinterVisitor;
 import view.ConsoleUi;
-import view.IndexedMemberListVisitor;
 
 /** A class for BoatClub's system controller. */
 public class BoatClubController {

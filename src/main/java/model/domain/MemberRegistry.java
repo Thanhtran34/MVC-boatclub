@@ -14,7 +14,7 @@ public class MemberRegistry implements BoatClub {
   public MemberRegistry() throws IOException {
     memberList = new ArrayList();
     dataStorage = new FileHandler();
-    dataStorage.checkAllMembers();
+    //dataStorage.checkAllMembers();
     dataStorage.saveMembers(memberList);
   }
 

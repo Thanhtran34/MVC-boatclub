@@ -3,6 +3,8 @@ package controller;
 import controller.exception.InvalidInput;
 import java.io.IOException;
 import model.domain.MemberRegistry;
+import model.persistence.FileHandler;
+import model.persistence.IdataStorage;
 import view.ConsoleUi;
 
 /** Responsible for staring the application. */
