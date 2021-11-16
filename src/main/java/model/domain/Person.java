@@ -15,7 +15,11 @@ public class Person {
   }
 
   public PersonalNumber getPersonalNumber() {
-    return pnr;
+    if (pnr.getString().matches("\\d+") && pnr.getString().length() == 12) {
+      return pnr;
+    } else {
+      return null;
+    }
   }
 
   protected void setName(Name changedInfo) {

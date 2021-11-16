@@ -49,7 +49,7 @@ public class MemberRegistry {
   }
 
   private boolean notUniqueMemberId(MemberId mid) {
-    for (Member member : members) {
+    for (Member member : members ) {
       if (member.getMemberId().equals(mid)) {
         return true;
       }

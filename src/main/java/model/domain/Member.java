@@ -1,6 +1,7 @@
 package model.domain;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.UUID;
 
@@ -35,6 +36,15 @@ public class Member extends Person {
    */
   public MemberId getMemberId() {
     return memberId;
+  }
+
+  /**
+   * Get string member id.
+   *
+   * @return the member id.
+   */
+  public String getId() {
+    return memberId.getMemberId();
   }
 
   /** Method to get all owned boats of one member. */

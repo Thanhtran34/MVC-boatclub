@@ -1,41 +1,40 @@
 package view;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Member;
-import java.util.ArrayList;
 import java.util.Scanner;
-
 import model.domain.Boat;
+import model.domain.Member;
 import model.domain.MemberId;
 import model.domain.Name;
+import model.domain.Person;
 import model.domain.PersonalNumber;
 
 /** The ConsoleUi class to show message and read user input. */
 public class ConsoleUi {
   private Scanner scan;
 
+  public enum ACTIONS {
+    LIST_COMPACT,
+    LIST_VERBOSE,
+
+    MEMBER_VIEW,
+    MEMBER_REGISTER,
+    MEMBER_EDIT,
+    MEMBER_DELETE,
+
+    BOAT_REGISTER,
+    BOAT_EDIT,
+    BOAT_REMOVE,
+    BACK,
+
+    EXIT;
+  }
+
   public ConsoleUi() {
     scan = new Scanner(System.in);
   }
 
-  public void showWelcomeMessage() {
-    System.out.println(
-        "|____________________________________________________________________________________________|");
-    System.out.println(
-        "|                                                                                            |");
-    System.out.println(
-        "|**************************** Welcome to YatchClub ⛵ ⛵ ⛵  *******************************|");
-    System.out.println(
-        "|                                                                                            |");
-    System.out.println(
-        "|____________________________________________________________________________________________|");
-  }
-
-  public void showMainMenu() {
-    System.out.println("");
+  public ACTIONS showMainMenu() {
+    this.showWelcomeMessage();
     System.out.println("!**** MAIN MENU ****!");
     System.out.println("-----------------------");
     System.out.println("_________Member________");
@@ -53,52 +52,197 @@ public class ConsoleUi {
     System.out.println("-1. Quit\n");
     System.out.println("------------------------");
     System.out.print("Enter your choice and press enter:\n");
+    return this.getUserChoice();
   }
 
-  public void createMember() {
-    System.out.println("Register new member: ");
+  private void showWelcomeMessage() {
+    System.out.println(
+        "|____________________________________________________________________________________________|");
+    System.out.println(
+        "|                                                                                            |");
+    System.out.println(
+        "|**************************** Welcome to YatchClub ⛵ ⛵ ⛵  *******************************|");
+    System.out.println(
+        "|                                                                                            |");
+    System.out.println(
+        "|____________________________________________________________________________________________|");
   }
 
-  public void updateMember() {
-    System.out.println("Update an existing member: ");
+  private ACTIONS getUserChoice() {
+    if (this.readUserInput().equals("1")) {
+      return ACTIONS.MEMBER_REGISTER;
+    } else if (this.readUserInput().equals("2")) {
+      return this.listOfMembers();
+    } else if (this.readUserInput().equals("3")) {
+      return ACTIONS.MEMBER_EDIT;
+    } else if (this.readUserInput().equals("4")) {
+      return ACTIONS.MEMBER_VIEW;
+    } else if (this.readUserInput().equals("5")) {
+      return ACTIONS.MEMBER_DELETE;
+    } else if (this.readUserInput().equals("6")) {
+      return ACTIONS.BOAT_REGISTER;
+    } else if (this.readUserInput().equals("7")) {
+      return ACTIONS.BOAT_EDIT;
+    } else if (this.readUserInput().equals("8")) {
+      return ACTIONS.BOAT_REMOVE;
+    } else if (this.readUserInput().equals("-1")) {
+      this.quitApps();
+      return ACTIONS.EXIT;
+    } else {
+      return ACTIONS.BACK;
+    }
+  }
+
+  private ACTIONS listOfMembers() {
+    System.out.println("Enter your choice for a specific list");
+    System.out.println("1. Compact list");
+    System.out.println("2. Verbose List");
+    System.out.print("Enter your choice and press enter:\n");
+    return this.getList();
+  }
+
+  private ACTIONS getList() {
+    if (this.readUserInput().equals("1")) {
+      return ACTIONS.LIST_COMPACT;
+    } else if (this.readUserInput().equals("2")) {
+      return ACTIONS.LIST_VERBOSE;
+    } else {
+      return ACTIONS.BACK;
+    }
+  }
+
+  /**
+   * Presents the interface for creating a new member.
+   *
+   * @return A person with all information set.
+   */
+  public Person presentNewMemberForm(Person defaultInfo) {
+    if (defaultInfo == null) {
+      System.out.println("Add new member");
+      System.out.println("Enter member name:");
+      String name = this.readUserInput();
+      if (name.length() == 0) {
+        return null;
+      }
+
+      System.out.println("Enter member personal number:");
+      String pnr = this.readUserInput();
+      if (pnr.length() == 0) {
+        return null;
+      }
+      return new Person(new Name(name), new PersonalNumber(pnr));
+    } else {
+      Name n;
+      PersonalNumber p;
+      System.out.println("Enter member name (" + defaultInfo.getName().toString() + "):");
+      String name = this.readUserInput();
+      if (name.length() == 0) {
+        n = defaultInfo.getName();
+      } else {
+        n = new Name(name);
+      }
+
+      System.out.println(
+          "Enter member personal number (" + defaultInfo.getPersonalNumber().getString() + ") :");
+      String pnr = this.readUserInput();
+      if (pnr.length() == 0) {
+        p = defaultInfo.getPersonalNumber();
+      } else {
+        p = new PersonalNumber(pnr);
+      }
+      return new Person(n, p);
+    }
+  }
+
+  /**
+   * Presents the interface for creating a new member.
+   *
+   * @return A person with all information set.
+   */
+  public void presentUpdateMemberForm(Member m) {
+    // Update member
+    System.out.println("Insert new user's information: ");
+    this.chooseName();
+    String name = this.readUserInput();
+    this.choosePersonalNo();
+    String pnr = this.readUserInput();
+    Person per = new Person(new Name(name), new PersonalNumber(pnr));
+    m.setInfo(per);
+    this.proceedSucessful();
+  }
+
+  public void showMemberInfo(Member m) {
+    System.out.println(
+        "Member ID: "
+            + m.getMemberId()
+            + "\tName: "
+            + m.getName()
+            + "\tPersonal Number: "
+            + m.getPersonalNumber());
+    this.getListOfBoats(m, m.getBoats());
+  }
+
+  public void getListOfBoats(Member m, Iterable<Boat> boats) {
+    // Printing boats
+    if (m.getNumberOfBoats() == 0) {
+      this.noBoats();
+    } else {
+      System.out.println("\tBoats are owned by this member");
+      for (Boat boat : boats) {
+
+        System.out.println(
+            "\t\t Boat ID:"
+                + boat.getBoatId()
+                + "\tType: "
+                + boat.getType()
+                + "\t Length in Feet: "
+                + boat.getLength());
+      }
+    }
   }
 
   public void lookForOneMember() {
     System.out.println("Check for a specific member: ");
   }
 
-  public void listMembers() {
-    System.out.println("Enter your choice for a specific list");
-    System.out.println("1. Compact list");
-    System.out.println("2. Verbose List");
-    System.out.print("Enter your choice and press enter:\n");
-  }
-
   public void showVerboseList(Iterable<Member> members) {
     StringBuffer verboseList = new StringBuffer();
     System.out.println(
         "--------------------------VERBOSE LIST OF ALL MEMBERS--------------------------\n");
-      for (Member m : members) {
-        verboseList.append("Member Id: " + m.getMemberId() + "\n");
-        verboseList.append("Name: " + m.getName() + "\n");
-        verboseList.append("======================================\n");
-        int i = 1;
-        ArrayList<Boat> boatsList = m.getBoats();
-        if (boatsList.size() != 0) {
-          for (Boat boat : boatsList) {
-            verboseList.append(i++);
-            verboseList.append("\t Type of Boat: " + boat.getType() + "\n");
-            verboseList.append("\t Length of Boat in Feet: " + boat.getLength() + " ft\n");
-            verboseList.append(
-                "\t Length of Boat in Meters: " + boat.getLengthInMeters() + " meters\n");
-            verboseList.append("========================================\n");
-          }
-        }
-        verboseList.append("----------------------------------------------------------------\n");
+    for (Member m : members) {
+      verboseList.append("Member Id: " + m.getMemberId() + "\n");
+      verboseList.append("Name: " + m.getName() + "\n");
+      verboseList.append("======================================\n");
+
+      int i = 1;
+      for (Boat boat : m.getBoats()) {
+        verboseList.append(i++);
+        verboseList.append("\t Type of Boat: " + boat.getType() + "\n");
+        verboseList.append("\t Length of Boat in Feet: " + boat.getLength() + " ft\n");
+        verboseList.append(
+            "\t Length of Boat in Meters: " + boat.getLengthInMeters() + " meters\n");
+        verboseList.append("========================================\n");
       }
+      verboseList.append("----------------------------------------------------------------\n");
+    }
     System.out.println(verboseList);
   }
 
+  public void showCompactList(Iterable<Member> members) {
+    StringBuffer compactList = new StringBuffer();
+    System.out.println("---------------------COMPACT LIST OF ALL MEMBERS----------------------\n");
+    for (Member m : members) {
+      compactList.append("Member Id: " + m.getMemberId() + "\n");
+      compactList.append("Name: " + m.getName() + "\n");
+      compactList.append("Amount of Boats: " + m.getNumberOfBoats() + "\n");
+      compactList.append("===================================\n");
+    }
+    System.out.println(compactList);
+  }
+
+  public void updateMember() {
+    System.out.println("Update an existing member: ");
+  }
 
   public void deleteMember() {
     System.out.println("Delete a member\n");
@@ -116,7 +260,7 @@ public class ConsoleUi {
     System.out.println("Delete a boat of one member: ");
   }
 
-  public void quitApps() {
+  private void quitApps() {
     System.out.println(
         "______________________________________________________________________________________________");
     System.out.println(
@@ -187,9 +331,5 @@ public class ConsoleUi {
 
   public void saveSuccessful() {
     System.out.println("Data has been saved.");
-  }
-
-  public void printList(StringBuffer list) {
-    System.out.println(list);
   }
 }
