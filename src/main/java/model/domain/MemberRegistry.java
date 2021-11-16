@@ -1,21 +1,23 @@
 package model.domain;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import model.persistence.FileHandler;
-import model.persistence.IdataStorage;
 
 /** A class for CRUD functions with member's data and check if id is unique. */
-public class MemberRegistry implements BoatClub {
-  private ArrayList<Member> memberList;
-  private IdataStorage dataStorage;
+public class MemberRegistry {
+  protected ArrayList<Member> members;
 
   /** Initializing constructor. */
-  public MemberRegistry() throws IOException {
-    memberList = new ArrayList();
-    dataStorage = new FileHandler();
-    //dataStorage.checkAllMembers();
-    dataStorage.saveMembers(memberList);
+  public MemberRegistry() {
+    members = new ArrayList();
+  }
+
+  /**
+   * Access to iterate all members.
+   *
+   * @return the members.
+   */
+  public Iterable<Member> getMembers() {
+    return members;
   }
 
   /**
@@ -24,7 +26,7 @@ public class MemberRegistry implements BoatClub {
    * @param toBeRemoved The member to be removed.
    */
   public void removeMember(Member toBeRemoved) {
-    memberList.remove(toBeRemoved);
+    members.remove(toBeRemoved);
   }
 
   /**
@@ -41,13 +43,13 @@ public class MemberRegistry implements BoatClub {
       mid = ret.getMemberId();
     }
 
-    memberList.add(ret);
+    members.add(ret);
 
     return ret;
   }
 
   private boolean notUniqueMemberId(MemberId mid) {
-    for (Member member : memberList) {
+    for (Member member : members) {
       if (member.getMemberId().equals(mid)) {
         return true;
       }
@@ -61,13 +63,6 @@ public class MemberRegistry implements BoatClub {
    * @return the member count.
    */
   public int getMemberCount() {
-    return memberList.size();
-  }
-
-  @Override
-  public void accept(BoatClubVisitor visitor) {
-    for (Member member : memberList) {
-      member.accept(visitor);
-    }
+    return members.size();
   }
 }

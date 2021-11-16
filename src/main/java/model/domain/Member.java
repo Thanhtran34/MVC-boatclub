@@ -5,50 +5,77 @@ import java.util.LinkedList;
 import java.util.UUID;
 
 /** The Member class to work with member's data. */
-public class Member {
-  private String name;
-  private String personalNumber;
-  private String memberId;
-  private LinkedList<Boat> boatList = new LinkedList<>();
+public class Member extends Person {
+  private MemberId memberId;
+  private ArrayList<Boat> boatList;
 
   /** An default instance of Member class. */
-  public Member() {}
+  public Member(Name name, PersonalNumber pnr) {
+    super(name, pnr);
+    this.memberId = new MemberId();
+    boatList = new ArrayList<>();
+  }
+
+  public Member(Name name, PersonalNumber pnr, MemberId id) {
+    super(name, pnr);
+    this.memberId = id;
+    boatList = new ArrayList<>();
+  }
+
+  public Member(Person person) {
+    super(person.getName(), person.getPersonalNumber());
+    this.memberId = new MemberId();
+    boatList = new ArrayList<>();
+  }
 
   /**
-   * An instance of Member class.
+   * Get the unique member id.
    *
-   * @param name {string} - name of member.
-   * @param personnumber {long} - personal number of member.
+   * @return the member id.
    */
-  public Member(String name, String personnumber) {
-    this.name = name;
-    this.personalNumber = personnumber;
-    // create unique id with 6 characters
-    UUID id = UUID.randomUUID();
-    this.memberId = id.toString().substring(0, 6);
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public String getMemberId() {
+  public MemberId getMemberId() {
     return memberId;
   }
 
-  public String getPersonalNumber() {
-    return personalNumber;
-  }
-
-  public LinkedList<Boat> getBoats() {
+  /** Method to get all owned boats of one member. */
+  public Iterable<Boat> getBoats() {
     return boatList;
   }
 
-  public void changeName(String name) {
-    this.name = name;
+  /** Method to get the number of owned boat. */
+  public int getNumberOfBoats() {
+    return boatList.size();
   }
 
-  public void changePersonNo(String pernum) {
-    this.personalNumber = pernum;
+  /**
+   * Adds a new boat to the member.
+   *
+   * @param t BoatType of Boat to add.
+   * @param lengthInFeet The length of the boat in feet.
+   */
+  public Boat addBoat(Boat.BoatType t, double lengthInFeet) {
+    Boat ret = new Boat(t, lengthInFeet);
+    this.boatList.add(ret);
+
+    return ret;
+  }
+
+  /**
+   * Call to remove a boat from the member.
+   *
+   * @param selectedBoat the boat object to remove.
+   */
+  public void deleteBoat(Boat selectedBoat) {
+    boatList.remove(selectedBoat);
+  }
+
+  /**
+   * Sets the personal information (name and personal number).
+   *
+   * @param changedInfo the information to set.
+   */
+  public void setInfo(Person changedInfo) {
+    this.setPersonalNumber(changedInfo.getPersonalNumber());
+    this.setName(changedInfo.getName());
   }
 }
