@@ -1,7 +1,7 @@
 package model.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import controller.exception.BoatNotFound;
+import exception.BoatNotFound;
 import java.util.ArrayList;
 import model.domain.Boat.BoatType;
 
@@ -73,5 +73,14 @@ public class Member {
 
   public void deleteBoat(int idx) throws BoatNotFound {
     boatList.remove(idx);
+  }
+
+  public boolean isBoatExist(int id) {
+    for (Boat b : boatList) {
+      if (b.getBoatId() == id) {
+        return true;
+      }
+    }
+    return false;
   }
 }

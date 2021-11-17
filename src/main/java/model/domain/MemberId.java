@@ -3,10 +3,10 @@ package model.domain;
 import java.util.UUID;
 
 /** A class for mmber id. */
-public class Id {
+public class MemberId {
   private String id;
 
-  public Id() {}
+  public MemberId() {}
 
   /**
    * Method to get Id.

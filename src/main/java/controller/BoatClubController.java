@@ -1,9 +1,9 @@
 package controller;
 
-import controller.exception.BoatNotFound;
-import controller.exception.DuplicationFound;
-import controller.exception.InvalidInput;
-import controller.exception.MemberNotFound;
+import exception.BoatNotFound;
+import exception.DuplicationFound;
+import exception.InvalidInput;
+import exception.MemberNotFound;
 import java.io.IOException;
 import model.domain.Boat;
 import model.domain.Member;
@@ -71,10 +71,7 @@ public class BoatClubController {
     }
   }
 
-  /**
-   * Method to register a member.
-   * 
-   */
+  /** Method to register a member. */
   private void registerMember(MemberRegistry reg, ConsoleUi ui) throws DuplicationFound {
     ui.chooseName();
     String name = ui.readUserInput();
@@ -86,10 +83,7 @@ public class BoatClubController {
     ui.saveSuccessful();
   }
 
-  /**
-   * Method to view one member.
-   * 
-   */
+  /** Method to view one member. */
   private void viewMember(MemberRegistry reg, ConsoleUi ui) {
     ui.lookForOneMember();
     // Show a list of members and select a specific member
@@ -101,14 +95,14 @@ public class BoatClubController {
         // Print out member information
         ui.showMemberInfo(m);
       }
+      if (reg.isMemberExist(memberId) == false) {
+        throw new MemberNotFound("Member is not found!");
+      }
     }
   }
 
-  /**
-   * Method to update one member.
-   * 
-   */
-  private void editMember(MemberRegistry reg, ConsoleUi ui) throws DuplicationFound {
+  /** Method to update one member. */
+  private void editMember(MemberRegistry reg, ConsoleUi ui) {
     ui.updateMember();
     // Show a list of members and select a specific member
     ui.showCompactList(reg.getMembers());
@@ -127,13 +121,13 @@ public class BoatClubController {
           ui.saveSuccessful();
         }
       }
+      if (reg.isMemberExist(memberId) == false) {
+        throw new MemberNotFound("Member is not found!");
+      }
     }
   }
 
-  /**
-   * Method to delete one member.
-   * 
-   */
+  /** Method to delete one member. */
   private void deleteMember(MemberRegistry reg, ConsoleUi ui) {
     ui.deleteMember();
     // Show a list of members and select a specific member
@@ -144,22 +138,23 @@ public class BoatClubController {
       if (reg.getMembers().get(i).getMemberId().equals(id)) {
         reg.deleteMember(i);
         ui.proceedSucessful();
-      } else {
-        throw new MemberNotFound("Member not found!");
+      }
+      if (reg.isMemberExist(id) == false) {
+        throw new MemberNotFound("Member is not found!");
       }
     }
   }
 
-  /**
-   * Method to register a boat to a member.
-   * 
-   */
+  /** Method to register a boat to a member. */
   private void registerBoat(MemberRegistry reg, ConsoleUi ui) {
     ui.registerBoat();
     // Show a list of members and select a specific member
     ui.showCompactList(reg.getMembers());
     ui.chooseMemberId();
     String memberId = ui.readUserInput();
+    if (reg.isMemberExist(memberId) == false) {
+      throw new MemberNotFound("Member is not found!");
+    }
     if (this.validMemberId(memberId, reg)) {
       // Check boat information
       Boat.BoatType type = this.getBoatTypes(ui);
@@ -171,7 +166,6 @@ public class BoatClubController {
             if (boat.getLength() == boatLength && boat.getType() == type) {
               // Boat found and not unique
               ui.duplicateInformation();
-              return;
             }
           }
           // register boat to its owner
@@ -179,16 +173,10 @@ public class BoatClubController {
           ui.proceedSucessful();
         }
       }
-
-    } else {
-      throw new MemberNotFound("Member is not found!");
     }
   }
 
-  /**
-   * Method to check if member id is right format.
-   * 
-   */
+  /** Method to check if member id is right format. */
   private boolean validMemberId(String memberIdNo, MemberRegistry reg) {
     boolean valid = true;
     // check and validate the member id
@@ -200,10 +188,7 @@ public class BoatClubController {
     return !valid;
   }
 
-  /**
-   * Method to get type of boat.
-   * 
-   */
+  /** Method to get type of boat. */
   private Boat.BoatType getBoatTypes(ConsoleUi ui) {
     ui.chooseBoatType();
     int counter = 1;
@@ -222,27 +207,22 @@ public class BoatClubController {
     return Boat.BoatType.values()[counter];
   }
 
-
-
-  /**
-   * Method to update one boat.
-   * 
-   */
-  private void editBoat(MemberRegistry reg, ConsoleUi ui) throws BoatNotFound, MemberNotFound {
+  /** Method to update one boat. */
+  private void editBoat(MemberRegistry reg, ConsoleUi ui) {
     ui.updateBoat();
     // Show a list of members and select a specific member
     ui.showCompactList(reg.getMembers());
     ui.chooseMemberId();
     String memberId = ui.readUserInput();
+    if (reg.isMemberExist(memberId) == false) {
+      throw new MemberNotFound("Member is not found!");
+    }
     if (this.validMemberId(memberId, reg)) {
-
       for (Member m : reg.getMembers()) {
-
         if (m.getMemberId().equals(memberId)) {
           if (m.getNumberOfBoats() == 0) {
             // No boats registered to member
             ui.noBoats();
-            return;
           }
           // Select boat
           int boatId = this.getBoatId(ui, m);
@@ -253,38 +233,35 @@ public class BoatClubController {
               double boatLength = ui.readInputDoub();
               b.setLength(boatLength);
               ui.proceedSucessful();
-              return;
             }
           }
-          // Boat not found
-          throw new BoatNotFound("Boat is not found!");
+          if (m.isBoatExist(boatId) == false) {
+            throw new BoatNotFound("Boat is not found!");
+          }
         }
       }
     } else {
       throw new MemberNotFound("Member is not found!");
     }
   }
- 
-  /**
-   * Method to get id of one boat.
-   * 
-   */
+
+  /** Method to get id of one boat. */
   private int getBoatId(ConsoleUi ui, Member member) {
     ui.getListOfBoats(member, member.getBoats());
     ui.chooseBoat();
     return ui.readInputInt();
   }
 
-  /**
-   * Method to delete one boat.
-   * 
-   */
+  /** Method to delete one boat. */
   private void removeBoat(MemberRegistry reg, ConsoleUi ui) throws MemberNotFound {
     ui.deleteBoat();
     // Show a list of members and select a specific member
     ui.showCompactList(reg.getMembers());
     ui.chooseMemberId();
     String memberId = ui.readUserInput();
+    if (reg.isMemberExist(memberId) == false) {
+      throw new MemberNotFound("Member is not found!");
+    }
     if (this.validMemberId(memberId, reg)) {
 
       for (Member m : reg.getMembers()) {

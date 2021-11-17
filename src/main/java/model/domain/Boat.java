@@ -1,6 +1,6 @@
 package model.domain;
 
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.ThreadLocalRandom;
 
 /** The Boat class to work with boat's data. */
 public class Boat {
@@ -11,9 +11,6 @@ public class Boat {
     KayakCanoe,
     Other;
   }
-
-  // static id generator shared among all instances of Coordinates
-  private static final AtomicInteger idGenerator = new AtomicInteger(1325);
 
   private String owner;
   private double lengthInFeet;
@@ -35,7 +32,7 @@ public class Boat {
     this.type = type;
     this.lengthInFeet = lengthInFeet;
     this.lengthInMeters = getLengthInMeters();
-    this.boatId = idGenerator.getAndIncrement() + (int) Math.round(lengthInFeet);
+    this.boatId = ThreadLocalRandom.current().nextInt(4000 + 1);
   }
 
   public String getOwner() {

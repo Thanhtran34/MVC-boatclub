@@ -1,4 +1,4 @@
-package controller.exception;
+package exception;
 
 /**
  * MemberNotFound exception class.

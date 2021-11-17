@@ -1,5 +1,6 @@
 package view;
 
+import exception.InvalidInput;
 import java.util.ArrayList;
 import java.util.Scanner;
 import model.domain.Boat;
@@ -10,7 +11,7 @@ public class ConsoleUi {
   private Scanner scan;
 
   /**
-   * Enum for meniú actions.
+   * Enum for menu actions.
    * 
    */
   public enum Actions {
@@ -37,7 +38,7 @@ public class ConsoleUi {
    * Method to get user input.
    * 
    */
-  public Actions showMainMenu() {
+  public Actions showMainMenu() throws InvalidInput{
     this.showWelcomeMessage();
     System.out.println("!**** MAIN MENU ****!");
     System.out.println("-----------------------");
@@ -80,7 +81,7 @@ public class ConsoleUi {
    * Check user input and link to ACTIONS.
    * 
    */
-  private Actions getUserChoice() {
+  private Actions getUserChoice() throws InvalidInput {
     String userIn = this.readUserInput();
     if (userIn.equals("1")) {
       return Actions.Member_Register;
@@ -109,7 +110,7 @@ public class ConsoleUi {
     } else if (userIn.equals("-1")) {
       return Actions.Exit;
     } else {
-      return Actions.Exit;
+      throw new InvalidInput("Input is wrong! Try again.");
     }
   }
 
@@ -233,6 +234,7 @@ public class ConsoleUi {
    * 
    */
   public void quitApps() {
+    scan.close();
     System.out.println(
         "______________________________________________________________________________________________");
     System.out.println(
