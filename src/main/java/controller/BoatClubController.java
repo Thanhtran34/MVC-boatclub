@@ -1,15 +1,18 @@
 package controller;
 
+import controller.exception.BoatNotFound;
 import controller.exception.InvalidInput;
 import controller.exception.MemberNotFound;
 import model.domain.*;
 import view.ConsoleUi;
+import view.ConsoleUi.ACTIONS;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /** A class for BoatClub's system controller. */
 public class BoatClubController {
-  private ArrayList<Member> members;
+  private ArrayList<Member> members = new ArrayList<>();
   private boolean APPLICATION_IS_RUNNING = true;
 
   /**
@@ -18,8 +21,9 @@ public class BoatClubController {
    * @param reg The registry to manipulate.
    * @param ui The ui to use for presentation and input.
    */
-  public void doMainMenu(MemberRegistry reg, ConsoleUi ui) throws InvalidInput {
+  public void doMainMenu(MemberRegistry reg, ConsoleUi ui) throws InvalidInput, IOException {
     ConsoleUi.ACTIONS action = ui.showMainMenu();
+    //reg.readInformation();
     switch (action) {
       case LIST_COMPACT:
         ui.showCompactList(this.members);
@@ -29,6 +33,7 @@ public class BoatClubController {
         break;
       case MEMBER_REGISTER:
         this.m_register(reg, ui);
+        reg.saveInformation();
         break;
       case MEMBER_VIEW:
         this.m_view(ui);
@@ -43,13 +48,16 @@ public class BoatClubController {
         this.b_register(ui);
         break;
       case BOAT_EDIT:
-        this.b_edit();
+        this.b_edit(ui);
         break;
       case BOAT_REMOVE:
-        this.b_remove();
+        this.b_remove(ui);
+        break;
+      case BACK:
+        this.doMainMenu(reg, ui);
         break;
       case EXIT:
-        if (this.isConfirmed()) {
+        if (this.isConfirmed(ui)) {
           APPLICATION_IS_RUNNING = false;
         }
         break;
@@ -172,7 +180,91 @@ public class BoatClubController {
     return Boat.BoatType.values()[counter];
   }
 
-  private void b_edit() {
+  private void b_edit(ConsoleUi ui) throws BoatNotFound, MemberNotFound {
+    ui.updateBoat();
+    // Show a list of members and select a specific member
+    ui.showCompactList(this.members);
+    ui.chooseMemberId();
+    String memberId = ui.readUserInput();
+    if (this.validMemberId(memberId)) {
 
+      for (Member m : members) {
+
+        if (m.getId().equals(memberId)) {
+          if (m.getNumberOfBoats() == 0) {
+            // No boats registered to member
+            ui.noBoats();
+            return;
+          }
+          // Select boat
+          int boatId = this.getBoatId(ui, m);
+          for (Boat b : m.getBoats()) {
+            if (b.getBoatId() == boatId) {
+              b.setType(this.getBoatTypes(ui));
+              ui.chooseBoatLength();
+              double boatLength = ui.readInputDoub();
+              b.setLength(boatLength);
+              ui.proceedSucessful();
+              return;
+            }
+          }
+          // Boat not found
+          throw new BoatNotFound("Boat is not found!");
+        }
+      }
+    } else {
+      throw new MemberNotFound("Member is not found!");
+    }
+  }
+
+  private int getBoatId(ConsoleUi ui, Member member) {
+    ui.getListOfBoats(member, member.getBoats());
+    ui.chooseBoat();
+    return ui.readInputInt();
+  }
+
+  private void b_remove(ConsoleUi ui) throws BoatNotFound, MemberNotFound {
+    ui.deleteBoat();
+    // Show a list of members and select a specific member
+    ui.showCompactList(this.members);
+    ui.chooseMemberId();
+    String memberId = ui.readUserInput();
+    if (this.validMemberId(memberId)) {
+
+      for (Member m : members) {
+
+        if (m.getId().equals(memberId)) {
+          // No boats stored on member
+
+          if (m.getNumberOfBoats() == 0) {
+
+            ui.noBoats();
+            return;
+          }
+          // Select boat
+          int boatId = getBoatId(ui, m);
+          for (Boat b : m.getBoats()) {
+
+            if (b.getBoatId() == boatId) {
+
+              // Removal of boat
+              m.deleteBoat(b);
+              ui.proceedSucessful();
+              return;
+            }
+          }
+          // Boat not found
+          throw new BoatNotFound("Boat is not found!");
+        }
+      }
+    } else {
+
+      // Member not found
+      throw new MemberNotFound("Member is not found!");
+    }
+  }
+
+  private boolean isConfirmed(ConsoleUi ui) {
+    return ui.getConfirmation();
   }
 }

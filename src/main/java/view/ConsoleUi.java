@@ -3,7 +3,6 @@ package view;
 import java.util.Scanner;
 import model.domain.Boat;
 import model.domain.Member;
-import model.domain.MemberId;
 import model.domain.Name;
 import model.domain.Person;
 import model.domain.PersonalNumber;
@@ -39,7 +38,7 @@ public class ConsoleUi {
     System.out.println("-----------------------");
     System.out.println("_________Member________");
     System.out.println("1. Register new member");
-    System.out.println("2. List members");
+    System.out.println("2. List of members");
     System.out.println("3. Update member information");
     System.out.println("4. View member");
     System.out.println("5. Delete member");
@@ -98,18 +97,15 @@ public class ConsoleUi {
     System.out.println("1. Compact list");
     System.out.println("2. Verbose List");
     System.out.print("Enter your choice and press enter:\n");
-    return this.getList();
-  }
-
-  private ACTIONS getList() {
     if (this.readUserInput().equals("1")) {
       return ACTIONS.LIST_COMPACT;
     } else if (this.readUserInput().equals("2")) {
       return ACTIONS.LIST_VERBOSE;
     } else {
-      return ACTIONS.BACK;
+      return ACTIONS.EXIT;
     }
   }
+
 
   /**
    * Presents the interface for creating a new member.
@@ -331,5 +327,14 @@ public class ConsoleUi {
 
   public void saveSuccessful() {
     System.out.println("Data has been saved.");
+  }
+
+  public boolean getConfirmation() {
+    System.out.println("Are you sure you wish to EXIT the Application?: (y/n) ");
+    String choice = this.readUserInput();
+    if (choice.equals("y")) {
+      return true;
+    }
+    return false;
   }
 }

@@ -1,14 +1,27 @@
 package model.domain;
 
+import model.persistence.FileHandler;
+import model.persistence.IdataStorage;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 /** A class for CRUD functions with member's data and check if id is unique. */
 public class MemberRegistry {
-  protected ArrayList<Member> members;
+  private ArrayList<Member> members;
+  private IdataStorage data = new FileHandler();
 
   /** Initializing constructor. */
   public MemberRegistry() {
-    members = new ArrayList();
+    members = new ArrayList<>();
+  }
+
+  public ArrayList<Member> readInformation() throws IOException {
+    return data.readFromFile();
+  }
+
+  public void saveInformation() throws IOException {
+    data.saveToFile(members);
   }
 
   /**

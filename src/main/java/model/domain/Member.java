@@ -1,91 +1,94 @@
 package model.domain;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.UUID;
+import controller.exception.BoatNotFound;
+import model.domain.Boat.BoatType;
 
 /** The Member class to work with member's data. */
-public class Member extends Person {
-  private MemberId memberId;
-  private ArrayList<Boat> boatList;
+public class Member {
+  private String name;
+  private String personalNumber;
+  private String memberId;
+  private ArrayList<Boat> boatList = new ArrayList<>();
 
   /** An default instance of Member class. */
-  public Member(Name name, PersonalNumber pnr) {
-    super(name, pnr);
-    this.memberId = new MemberId();
-    boatList = new ArrayList<>();
-  }
-
-  public Member(Name name, PersonalNumber pnr, MemberId id) {
-    super(name, pnr);
-    this.memberId = id;
-    boatList = new ArrayList<>();
-  }
-
-  public Member(Person person) {
-    super(person.getName(), person.getPersonalNumber());
-    this.memberId = new MemberId();
-    boatList = new ArrayList<>();
-  }
+  public Member() {}
 
   /**
-   * Get the unique member id.
+   * An instance of Member class.
    *
-   * @return the member id.
+   * @param name {string} - name of member.
+   * @param personnumber {string} - personal number of member.
    */
-  public MemberId getMemberId() {
+  public Member(String name, String personnumber) {
+    this.name = name;
+    this.personalNumber = personnumber;
+    // create unique id with 6 characters
+    UUID id = UUID.randomUUID();
+    this.memberId = id.toString().substring(0, 6);
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String newName) {
+    name = newName;
+  }
+
+  public String getMemberId() {
     return memberId;
   }
 
-  /**
-   * Get string member id.
-   *
-   * @return the member id.
-   */
-  public String getId() {
-    return memberId.getMemberId();
+  public String getPersonalNumber() {
+    return personalNumber;
   }
 
-  /** Method to get all owned boats of one member. */
+  public void setPersonalNumber(String pernum) {
+    this.personalNumber = pernum;
+  }
+
   public Iterable<Boat> getBoats() {
     return boatList;
   }
 
-  /** Method to get the number of owned boat. */
   public int getNumberOfBoats() {
     return boatList.size();
   }
 
-  /**
-   * Adds a new boat to the member.
-   *
-   * @param t BoatType of Boat to add.
-   * @param lengthInFeet The length of the boat in feet.
-   */
-  public Boat addBoat(Boat.BoatType t, double lengthInFeet) {
-    Boat ret = new Boat(t, lengthInFeet);
-    this.boatList.add(ret);
-
-    return ret;
+  public void changeName(String name) {
+    this.name = name;
   }
 
-  /**
-   * Call to remove a boat from the member.
-   *
-   * @param selectedBoat the boat object to remove.
-   */
-  public void deleteBoat(Boat selectedBoat) {
-    boatList.remove(selectedBoat);
+  public Boat getOneBoat(int position) throws BoatNotFound {
+    hasBoat(position);
+    return boatList.get(position);
   }
 
-  /**
-   * Sets the personal information (name and personal number).
-   *
-   * @param changedInfo the information to set.
-   */
-  public void setInfo(Person changedInfo) {
-    this.setPersonalNumber(changedInfo.getPersonalNumber());
-    this.setName(changedInfo.getName());
+  public Boat[] getAllBoats() {
+    Boat[] boats = new Boat[boatList.size()];
+    return boatList.toArray(boats);
+  }
+
+  public void registerBoat(BoatType type, double lengthInFeet) {
+    Boat boat = new Boat(type, lengthInFeet);
+    boatList.add(boat);
+  }
+
+  public void updateBoat(double length, BoatType type, Boat boat) {
+    boat.setLength(length);
+    boat.setType(type);
+  }
+
+  public void deleteBoat(int position) throws BoatNotFound {
+    hasBoat(position);
+    boatList.remove(position);
+  }
+
+  private void hasBoat(int position) throws BoatNotFound {
+    if (boatList.size() <= position) {
+      throw new BoatNotFound("Boat Not Found!");
+    }
   }
 }
