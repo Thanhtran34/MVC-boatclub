@@ -15,6 +15,7 @@ public class Boat {
   // static id generator shared among all instances of Coordinates
   private static final AtomicInteger idGenerator = new AtomicInteger(1325);
 
+  private String owner;
   private double lengthInFeet;
   private double lengthInMeters;
   private int boatId;
@@ -25,14 +26,20 @@ public class Boat {
   /**
    * An instance of the Boat class.
    *
+   * @param owner {String} - the owner of the boat-memberId.
    * @param type {*} the type of the boat.
    * @param lengthInFeet {*} the length in feet of the boat.
    */
-  public Boat(BoatType type, double lengthInFeet) {
+  public Boat(String owner, BoatType type, double lengthInFeet) {
+    this.owner = owner;
     this.type = type;
     this.lengthInFeet = lengthInFeet;
     this.lengthInMeters = getLengthInMeters();
     this.boatId = idGenerator.getAndIncrement() + (int) Math.round(lengthInFeet);
+  }
+
+  public String getOwner() {
+    return owner;
   }
 
   public double getLength() {

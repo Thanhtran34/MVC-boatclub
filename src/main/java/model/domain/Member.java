@@ -2,14 +2,17 @@ package model.domain;
 
 import java.util.ArrayList;
 import java.util.UUID;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import controller.exception.BoatNotFound;
 import model.domain.Boat.BoatType;
 
 /** The Member class to work with member's data. */
 public class Member {
   private String name;
-  private String personalNumber;
   private String memberId;
+  private String personalNumber;
   private ArrayList<Boat> boatList = new ArrayList<>();
 
   /** An default instance of Member class. */
@@ -21,12 +24,10 @@ public class Member {
    * @param name {string} - name of member.
    * @param personnumber {string} - personal number of member.
    */
-  public Member(String name, String personnumber) {
+  public Member(String name, String personnumber, String id) {
     this.name = name;
     this.personalNumber = personnumber;
-    // create unique id with 6 characters
-    UUID id = UUID.randomUUID();
-    this.memberId = id.toString().substring(0, 6);
+    this.memberId = id;
   }
 
   public String getName() {
@@ -49,30 +50,22 @@ public class Member {
     this.personalNumber = pernum;
   }
 
-  public Iterable<Boat> getBoats() {
+  public ArrayList<Boat> getBoats() {
     return boatList;
   }
 
+  @JsonIgnore
   public int getNumberOfBoats() {
     return boatList.size();
   }
 
-  public void changeName(String name) {
-    this.name = name;
-  }
-
+  @JsonIgnore
   public Boat getOneBoat(int position) throws BoatNotFound {
-    hasBoat(position);
     return boatList.get(position);
   }
 
-  public Boat[] getAllBoats() {
-    Boat[] boats = new Boat[boatList.size()];
-    return boatList.toArray(boats);
-  }
-
-  public void registerBoat(BoatType type, double lengthInFeet) {
-    Boat boat = new Boat(type, lengthInFeet);
+  public void registerBoat(String owner, BoatType type, double lengthInFeet) {
+    Boat boat = new Boat(owner, type, lengthInFeet);
     boatList.add(boat);
   }
 
@@ -81,14 +74,7 @@ public class Member {
     boat.setType(type);
   }
 
-  public void deleteBoat(int position) throws BoatNotFound {
-    hasBoat(position);
-    boatList.remove(position);
-  }
-
-  private void hasBoat(int position) throws BoatNotFound {
-    if (boatList.size() <= position) {
-      throw new BoatNotFound("Boat Not Found!");
-    }
+  public void deleteBoat(int idx) throws BoatNotFound {
+    boatList.remove(idx);
   }
 }

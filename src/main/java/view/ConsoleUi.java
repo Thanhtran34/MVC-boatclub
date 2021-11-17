@@ -1,16 +1,14 @@
 package view;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 import model.domain.Boat;
 import model.domain.Member;
-import model.domain.Name;
-import model.domain.Person;
-import model.domain.PersonalNumber;
 
 /** The ConsoleUi class to show message and read user input. */
 public class ConsoleUi {
   private Scanner scan;
-
+  
   public enum ACTIONS {
     LIST_COMPACT,
     LIST_VERBOSE,
@@ -23,7 +21,6 @@ public class ConsoleUi {
     BOAT_REGISTER,
     BOAT_EDIT,
     BOAT_REMOVE,
-    BACK,
 
     EXIT;
   }
@@ -68,103 +65,43 @@ public class ConsoleUi {
   }
 
   private ACTIONS getUserChoice() {
-    if (this.readUserInput().equals("1")) {
+    String userIn = this.readUserInput();
+    if (userIn.equals("1")) {
       return ACTIONS.MEMBER_REGISTER;
-    } else if (this.readUserInput().equals("2")) {
-      return this.listOfMembers();
-    } else if (this.readUserInput().equals("3")) {
+    } else if (userIn.equals("2")) {
+      this.listMembers();
+      String choice = this.readUserInput();
+      if (choice.equals("1")) {
+        return ACTIONS.LIST_COMPACT;
+      } else if (choice.equals("2")) {
+        return ACTIONS.LIST_VERBOSE;
+      } else {
+        return ACTIONS.EXIT;
+      }
+    } else if (userIn.equals("3")) {
       return ACTIONS.MEMBER_EDIT;
-    } else if (this.readUserInput().equals("4")) {
+    } else if (userIn.equals("4")) {
       return ACTIONS.MEMBER_VIEW;
-    } else if (this.readUserInput().equals("5")) {
+    } else if (userIn.equals("5")) {
       return ACTIONS.MEMBER_DELETE;
-    } else if (this.readUserInput().equals("6")) {
+    } else if (userIn.equals("6")) {
       return ACTIONS.BOAT_REGISTER;
-    } else if (this.readUserInput().equals("7")) {
+    } else if (userIn.equals("7")) {
       return ACTIONS.BOAT_EDIT;
-    } else if (this.readUserInput().equals("8")) {
+    } else if (userIn.equals("8")) {
       return ACTIONS.BOAT_REMOVE;
-    } else if (this.readUserInput().equals("-1")) {
-      this.quitApps();
+    } else if (userIn.equals("-1")) {
       return ACTIONS.EXIT;
     } else {
-      return ACTIONS.BACK;
+      return ACTIONS.EXIT;
     }
   }
 
-  private ACTIONS listOfMembers() {
+  private void listMembers() {
     System.out.println("Enter your choice for a specific list");
     System.out.println("1. Compact list");
     System.out.println("2. Verbose List");
     System.out.print("Enter your choice and press enter:\n");
-    if (this.readUserInput().equals("1")) {
-      return ACTIONS.LIST_COMPACT;
-    } else if (this.readUserInput().equals("2")) {
-      return ACTIONS.LIST_VERBOSE;
-    } else {
-      return ACTIONS.EXIT;
-    }
-  }
-
-
-  /**
-   * Presents the interface for creating a new member.
-   *
-   * @return A person with all information set.
-   */
-  public Person presentNewMemberForm(Person defaultInfo) {
-    if (defaultInfo == null) {
-      System.out.println("Add new member");
-      System.out.println("Enter member name:");
-      String name = this.readUserInput();
-      if (name.length() == 0) {
-        return null;
-      }
-
-      System.out.println("Enter member personal number:");
-      String pnr = this.readUserInput();
-      if (pnr.length() == 0) {
-        return null;
-      }
-      return new Person(new Name(name), new PersonalNumber(pnr));
-    } else {
-      Name n;
-      PersonalNumber p;
-      System.out.println("Enter member name (" + defaultInfo.getName().toString() + "):");
-      String name = this.readUserInput();
-      if (name.length() == 0) {
-        n = defaultInfo.getName();
-      } else {
-        n = new Name(name);
-      }
-
-      System.out.println(
-          "Enter member personal number (" + defaultInfo.getPersonalNumber().getString() + ") :");
-      String pnr = this.readUserInput();
-      if (pnr.length() == 0) {
-        p = defaultInfo.getPersonalNumber();
-      } else {
-        p = new PersonalNumber(pnr);
-      }
-      return new Person(n, p);
-    }
-  }
-
-  /**
-   * Presents the interface for creating a new member.
-   *
-   * @return A person with all information set.
-   */
-  public void presentUpdateMemberForm(Member m) {
-    // Update member
-    System.out.println("Insert new user's information: ");
-    this.chooseName();
-    String name = this.readUserInput();
-    this.choosePersonalNo();
-    String pnr = this.readUserInput();
-    Person per = new Person(new Name(name), new PersonalNumber(pnr));
-    m.setInfo(per);
-    this.proceedSucessful();
   }
 
   public void showMemberInfo(Member m) {
@@ -179,7 +116,6 @@ public class ConsoleUi {
   }
 
   public void getListOfBoats(Member m, Iterable<Boat> boats) {
-    // Printing boats
     if (m.getNumberOfBoats() == 0) {
       this.noBoats();
     } else {
@@ -197,11 +133,7 @@ public class ConsoleUi {
     }
   }
 
-  public void lookForOneMember() {
-    System.out.println("Check for a specific member: ");
-  }
-
-  public void showVerboseList(Iterable<Member> members) {
+  public void showVerboseList(ArrayList<Member> members) {
     StringBuffer verboseList = new StringBuffer();
     System.out.println(
         "--------------------------VERBOSE LIST OF ALL MEMBERS--------------------------\n");
@@ -224,7 +156,7 @@ public class ConsoleUi {
     System.out.println(verboseList);
   }
 
-  public void showCompactList(Iterable<Member> members) {
+  public void showCompactList(ArrayList<Member> members) {
     StringBuffer compactList = new StringBuffer();
     System.out.println("---------------------COMPACT LIST OF ALL MEMBERS----------------------\n");
     for (Member m : members) {
@@ -234,6 +166,10 @@ public class ConsoleUi {
       compactList.append("===================================\n");
     }
     System.out.println(compactList);
+  }
+
+  public void lookForOneMember() {
+    System.out.println("Check for a specific member: ");
   }
 
   public void updateMember() {
@@ -256,7 +192,7 @@ public class ConsoleUi {
     System.out.println("Delete a boat of one member: ");
   }
 
-  private void quitApps() {
+  public void quitApps() {
     System.out.println(
         "______________________________________________________________________________________________");
     System.out.println(
@@ -293,10 +229,6 @@ public class ConsoleUi {
     System.out.println("Action completed!");
   }
 
-  public void duplicateInformation() {
-    System.out.println("Information is duplicated!");
-  }
-
   public void chooseBoat() {
     System.out.println("Please enter boat ID: ");
   }
@@ -329,12 +261,7 @@ public class ConsoleUi {
     System.out.println("Data has been saved.");
   }
 
-  public boolean getConfirmation() {
-    System.out.println("Are you sure you wish to EXIT the Application?: (y/n) ");
-    String choice = this.readUserInput();
-    if (choice.equals("y")) {
-      return true;
-    }
-    return false;
+  public void duplicateInformation() {
+    System.out.println("Information is duplicated!");
   }
 }

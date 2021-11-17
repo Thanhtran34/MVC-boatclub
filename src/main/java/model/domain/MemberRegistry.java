@@ -2,25 +2,27 @@ package model.domain;
 
 import model.persistence.FileHandler;
 import model.persistence.IdataStorage;
-
 import java.io.IOException;
 import java.util.ArrayList;
+import controller.exception.DuplicationFound;
+import controller.exception.MemberNotFound;
 
 /** A class for CRUD functions with member's data and check if id is unique. */
 public class MemberRegistry {
-  private ArrayList<Member> members;
-  private IdataStorage data = new FileHandler();
+  private ArrayList<Member> members = new ArrayList<>();
+  private IdataStorage data;
 
   /** Initializing constructor. */
   public MemberRegistry() {
-    members = new ArrayList<>();
+    data = new FileHandler();
   }
 
-  public ArrayList<Member> readInformation() throws IOException {
-    return data.readFromFile();
+  public void readData() throws IOException {
+    data.readFromFile();
   }
 
-  public void saveInformation() throws IOException {
+
+  public void saveDataToRegistry() throws IOException {
     data.saveToFile(members);
   }
 
@@ -29,45 +31,42 @@ public class MemberRegistry {
    *
    * @return the members.
    */
-  public Iterable<Member> getMembers() {
+  public ArrayList<Member> getMembers() {
     return members;
   }
 
-  /**
-   * Removes a member from the registry.
-   *
-   * @param toBeRemoved The member to be removed.
-   */
-  public void removeMember(Member toBeRemoved) {
-    members.remove(toBeRemoved);
-  }
-
-  /**
-   * Creates a new member and adds it to the registry. A unique member id is assigned.
-   *
-   * @param person The information to use to create the new member.
-   */
-  public Member addNewMember(Person person) {
-    Member ret = new Member(person);
-    MemberId mid = ret.getMemberId();
-
-    while (notUniqueMemberId(mid)) {
-      ret = new Member(person);
-      mid = ret.getMemberId();
+  /** Creates a new member and adds it to the registry. A unique member id is assigned. */
+  public void registerMember(String name, String pnr) throws DuplicationFound {
+    Id id = new Id();
+    Member m = new Member(name, pnr, id.getId());
+    if (!notUniqueMemberId(m.getMemberId())) {
+      members.add(m);
+    } else {
+      throw new DuplicationFound("Member Id is not unique!");
     }
-
-    members.add(ret);
-
-    return ret;
   }
 
-  private boolean notUniqueMemberId(MemberId mid) {
-    for (Member member : members ) {
-      if (member.getMemberId().equals(mid)) {
+  private boolean notUniqueMemberId(String input) {
+    for (Member member : members) {
+      if (member.getMemberId().equals(input)) {
         return true;
       }
     }
     return false;
+  }
+
+  public Member getMember(String id) throws MemberNotFound {
+    for (Member member : members) {
+      if (member.getMemberId() == id) {
+        return member;
+      }
+    }
+    throw new MemberNotFound("Member Not Found!");
+  }
+
+  /** Removes a member from the registry. */
+  public void deleteMember(int idx) throws MemberNotFound {
+      this.members.remove(idx);
   }
 
   /**
