@@ -8,28 +8,36 @@ import model.domain.Member;
 /** The ConsoleUi class to show message and read user input. */
 public class ConsoleUi {
   private Scanner scan;
-  
-  public enum ACTIONS {
-    LIST_COMPACT,
-    LIST_VERBOSE,
 
-    MEMBER_VIEW,
-    MEMBER_REGISTER,
-    MEMBER_EDIT,
-    MEMBER_DELETE,
+  /**
+   * Enum for meniú actions.
+   * 
+   */
+  public enum Actions {
+    List_Compact,
+    List_Verbose,
 
-    BOAT_REGISTER,
-    BOAT_EDIT,
-    BOAT_REMOVE,
+    Member_View,
+    Member_Register,
+    Member_Edit,
+    Member_Delete,
 
-    EXIT;
+    Boat_Register,
+    Boat_Edit,
+    Boat_Remove,
+
+    Exit;
   }
 
   public ConsoleUi() {
     scan = new Scanner(System.in);
   }
 
-  public ACTIONS showMainMenu() {
+  /**
+   * Method to get user input.
+   * 
+   */
+  public Actions showMainMenu() {
     this.showWelcomeMessage();
     System.out.println("!**** MAIN MENU ****!");
     System.out.println("-----------------------");
@@ -51,6 +59,9 @@ public class ConsoleUi {
     return this.getUserChoice();
   }
 
+  /**
+   * Method to show welcome message.
+   */
   private void showWelcomeMessage() {
     System.out.println(
         "|____________________________________________________________________________________________|");
@@ -64,39 +75,48 @@ public class ConsoleUi {
         "|____________________________________________________________________________________________|");
   }
 
-  private ACTIONS getUserChoice() {
+
+  /**
+   * Check user input and link to ACTIONS.
+   * 
+   */
+  private Actions getUserChoice() {
     String userIn = this.readUserInput();
     if (userIn.equals("1")) {
-      return ACTIONS.MEMBER_REGISTER;
+      return Actions.Member_Register;
     } else if (userIn.equals("2")) {
       this.listMembers();
       String choice = this.readUserInput();
       if (choice.equals("1")) {
-        return ACTIONS.LIST_COMPACT;
+        return Actions.List_Compact;
       } else if (choice.equals("2")) {
-        return ACTIONS.LIST_VERBOSE;
+        return Actions.List_Verbose;
       } else {
-        return ACTIONS.EXIT;
+        return Actions.Exit;
       }
     } else if (userIn.equals("3")) {
-      return ACTIONS.MEMBER_EDIT;
+      return Actions.Member_Edit;
     } else if (userIn.equals("4")) {
-      return ACTIONS.MEMBER_VIEW;
+      return Actions.Member_View;
     } else if (userIn.equals("5")) {
-      return ACTIONS.MEMBER_DELETE;
+      return Actions.Member_Delete;
     } else if (userIn.equals("6")) {
-      return ACTIONS.BOAT_REGISTER;
+      return Actions.Boat_Register;
     } else if (userIn.equals("7")) {
-      return ACTIONS.BOAT_EDIT;
+      return Actions.Boat_Edit;
     } else if (userIn.equals("8")) {
-      return ACTIONS.BOAT_REMOVE;
+      return Actions.Boat_Remove;
     } else if (userIn.equals("-1")) {
-      return ACTIONS.EXIT;
+      return Actions.Exit;
     } else {
-      return ACTIONS.EXIT;
+      return Actions.Exit;
     }
   }
 
+  /**
+   * Method for list of members.
+   * 
+   */
   private void listMembers() {
     System.out.println("Enter your choice for a specific list");
     System.out.println("1. Compact list");
@@ -104,6 +124,10 @@ public class ConsoleUi {
     System.out.print("Enter your choice and press enter:\n");
   }
 
+  /**
+   * Method to show member's information.
+   * 
+   */
   public void showMemberInfo(Member m) {
     System.out.println(
         "Member ID: "
@@ -115,6 +139,10 @@ public class ConsoleUi {
     this.getListOfBoats(m, m.getBoats());
   }
 
+  /**
+   * Method to show list of boats.
+   * 
+   */
   public void getListOfBoats(Member m, Iterable<Boat> boats) {
     if (m.getNumberOfBoats() == 0) {
       this.noBoats();
@@ -133,6 +161,10 @@ public class ConsoleUi {
     }
   }
 
+  /**
+   * Method to show verbose list.
+   *
+   */
   public void showVerboseList(ArrayList<Member> members) {
     StringBuffer verboseList = new StringBuffer();
     System.out.println(
@@ -156,6 +188,10 @@ public class ConsoleUi {
     System.out.println(verboseList);
   }
 
+  /**
+   * Method to show compact list of members.
+   * 
+   */
   public void showCompactList(ArrayList<Member> members) {
     StringBuffer compactList = new StringBuffer();
     System.out.println("---------------------COMPACT LIST OF ALL MEMBERS----------------------\n");
@@ -192,6 +228,10 @@ public class ConsoleUi {
     System.out.println("Delete a boat of one member: ");
   }
 
+  /**
+   * Method to show ending of apps.
+   * 
+   */
   public void quitApps() {
     System.out.println(
         "______________________________________________________________________________________________");
@@ -205,6 +245,10 @@ public class ConsoleUi {
     return scan.nextLine();
   }
 
+  /**
+   * Method to get int input.
+   * 
+   */
   public int readInputInt() {
     try {
       return Integer.parseInt(this.readUserInput());
@@ -213,6 +257,10 @@ public class ConsoleUi {
     }
   }
 
+  /**
+   * Method to get double input.
+   * 
+   */
   public double readInputDoub() {
     try {
       return Double.parseDouble(this.readUserInput());

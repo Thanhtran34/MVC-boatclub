@@ -1,11 +1,8 @@
 package model.domain;
 
-import java.util.ArrayList;
-import java.util.UUID;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import controller.exception.BoatNotFound;
+import java.util.ArrayList;
 import model.domain.Boat.BoatType;
 
 /** The Member class to work with member's data. */

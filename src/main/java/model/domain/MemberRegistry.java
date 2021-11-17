@@ -1,11 +1,11 @@
 package model.domain;
 
-import model.persistence.FileHandler;
-import model.persistence.IdataStorage;
-import java.io.IOException;
-import java.util.ArrayList;
 import controller.exception.DuplicationFound;
 import controller.exception.MemberNotFound;
+import java.io.IOException;
+import java.util.ArrayList;
+import model.persistence.FileHandler;
+import model.persistence.IdataStorage;
 
 /** A class for CRUD functions with member's data and check if id is unique. */
 public class MemberRegistry {
@@ -20,7 +20,6 @@ public class MemberRegistry {
   public void readData() throws IOException {
     data.readFromFile();
   }
-
 
   public void saveDataToRegistry() throws IOException {
     data.saveToFile(members);
@@ -55,9 +54,13 @@ public class MemberRegistry {
     return false;
   }
 
+  /**
+   * Method to get one member with id.
+   * 
+   */
   public Member getMember(String id) throws MemberNotFound {
     for (Member member : members) {
-      if (member.getMemberId() == id) {
+      if (member.getMemberId().equals(id)) {
         return member;
       }
     }
@@ -66,7 +69,7 @@ public class MemberRegistry {
 
   /** Removes a member from the registry. */
   public void deleteMember(int idx) throws MemberNotFound {
-      this.members.remove(idx);
+    this.members.remove(idx);
   }
 
   /**

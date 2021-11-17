@@ -8,6 +8,10 @@ public class Id {
 
   public Id() {}
 
+  /**
+   * Method to get Id.
+   * 
+   */
   public String getId() {
     UUID idd = UUID.randomUUID();
     this.id = idd.toString().substring(0, 6);

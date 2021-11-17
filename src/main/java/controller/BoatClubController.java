@@ -1,20 +1,21 @@
 package controller;
 
-import java.io.IOError;
-import java.io.IOException;
-import java.util.ArrayList;
 import controller.exception.BoatNotFound;
 import controller.exception.DuplicationFound;
 import controller.exception.InvalidInput;
 import controller.exception.MemberNotFound;
-import model.domain.*;
+import java.io.IOException;
+import model.domain.Boat;
+import model.domain.Member;
+import model.domain.MemberRegistry;
 import view.ConsoleUi;
 
 /** A class for BoatClub's system controller. */
 public class BoatClubController {
 
   public BoatClubController() throws IOException {}
-    private boolean doQuit = true;
+
+  private boolean doQuit = true;
 
   /**
    * Call to run the program from the main menu.
@@ -25,42 +26,42 @@ public class BoatClubController {
   public void doMainMenu(MemberRegistry reg, ConsoleUi ui) throws Exception {
     reg.readData();
     while (doQuit) {
-      ConsoleUi.ACTIONS action = ui.showMainMenu();
+      ConsoleUi.Actions action = ui.showMainMenu();
       switch (action) {
-        case LIST_COMPACT:
+        case List_Compact:
           ui.showCompactList(reg.getMembers());
           break;
-        case LIST_VERBOSE:
+        case List_Verbose:
           ui.showVerboseList(reg.getMembers());
           break;
-        case MEMBER_REGISTER:
-          this.m_register(reg, ui);
+        case Member_Register:
+          this.registerMember(reg, ui);
           reg.saveDataToRegistry();
           break;
-        case MEMBER_VIEW:
-          this.m_view(reg, ui);
+        case Member_View:
+          this.viewMember(reg, ui);
           break;
-        case MEMBER_EDIT:
-          this.m_edit(reg, ui);
+        case Member_Edit:
+          this.editMember(reg, ui);
           reg.saveDataToRegistry();
           break;
-        case MEMBER_DELETE:
-          this.m_delete(reg, ui);
+        case Member_Delete:
+          this.deleteMember(reg, ui);
           reg.saveDataToRegistry();
           break;
-        case BOAT_REGISTER:
-          this.b_register(reg, ui);
+        case Boat_Register:
+          this.registerBoat(reg, ui);
           reg.saveDataToRegistry();
           break;
-        case BOAT_EDIT:
-          this.b_edit(reg, ui);
+        case Boat_Edit:
+          this.editBoat(reg, ui);
           reg.saveDataToRegistry();
           break;
-        case BOAT_REMOVE:
-          this.b_remove(reg, ui);
+        case Boat_Remove:
+          this.removeBoat(reg, ui);
           reg.saveDataToRegistry();
           break;
-        case EXIT:
+        case Exit:
           doQuit = false;
           ui.quitApps();
           break;
@@ -70,7 +71,11 @@ public class BoatClubController {
     }
   }
 
-  private void m_register(MemberRegistry reg, ConsoleUi ui) throws DuplicationFound {
+  /**
+   * Method to register a member.
+   * 
+   */
+  private void registerMember(MemberRegistry reg, ConsoleUi ui) throws DuplicationFound {
     ui.chooseName();
     String name = ui.readUserInput();
     ui.choosePersonalNo();
@@ -81,7 +86,11 @@ public class BoatClubController {
     ui.saveSuccessful();
   }
 
-  private void m_view(MemberRegistry reg, ConsoleUi ui) {
+  /**
+   * Method to view one member.
+   * 
+   */
+  private void viewMember(MemberRegistry reg, ConsoleUi ui) {
     ui.lookForOneMember();
     // Show a list of members and select a specific member
     ui.showCompactList(reg.getMembers());
@@ -95,7 +104,11 @@ public class BoatClubController {
     }
   }
 
-  private void m_edit(MemberRegistry reg, ConsoleUi ui) throws DuplicationFound {
+  /**
+   * Method to update one member.
+   * 
+   */
+  private void editMember(MemberRegistry reg, ConsoleUi ui) throws DuplicationFound {
     ui.updateMember();
     // Show a list of members and select a specific member
     ui.showCompactList(reg.getMembers());
@@ -117,7 +130,11 @@ public class BoatClubController {
     }
   }
 
-  private void m_delete(MemberRegistry reg, ConsoleUi ui) {
+  /**
+   * Method to delete one member.
+   * 
+   */
+  private void deleteMember(MemberRegistry reg, ConsoleUi ui) {
     ui.deleteMember();
     // Show a list of members and select a specific member
     ui.showCompactList(reg.getMembers());
@@ -133,7 +150,11 @@ public class BoatClubController {
     }
   }
 
-  private void b_register(MemberRegistry reg, ConsoleUi ui) {
+  /**
+   * Method to register a boat to a member.
+   * 
+   */
+  private void registerBoat(MemberRegistry reg, ConsoleUi ui) {
     ui.registerBoat();
     // Show a list of members and select a specific member
     ui.showCompactList(reg.getMembers());
@@ -164,6 +185,10 @@ public class BoatClubController {
     }
   }
 
+  /**
+   * Method to check if member id is right format.
+   * 
+   */
   private boolean validMemberId(String memberIdNo, MemberRegistry reg) {
     boolean valid = true;
     // check and validate the member id
@@ -175,6 +200,10 @@ public class BoatClubController {
     return !valid;
   }
 
+  /**
+   * Method to get type of boat.
+   * 
+   */
   private Boat.BoatType getBoatTypes(ConsoleUi ui) {
     ui.chooseBoatType();
     int counter = 1;
@@ -193,7 +222,13 @@ public class BoatClubController {
     return Boat.BoatType.values()[counter];
   }
 
-  private void b_edit(MemberRegistry reg, ConsoleUi ui) throws BoatNotFound, MemberNotFound {
+
+
+  /**
+   * Method to update one boat.
+   * 
+   */
+  private void editBoat(MemberRegistry reg, ConsoleUi ui) throws BoatNotFound, MemberNotFound {
     ui.updateBoat();
     // Show a list of members and select a specific member
     ui.showCompactList(reg.getMembers());
@@ -229,14 +264,22 @@ public class BoatClubController {
       throw new MemberNotFound("Member is not found!");
     }
   }
-
+ 
+  /**
+   * Method to get id of one boat.
+   * 
+   */
   private int getBoatId(ConsoleUi ui, Member member) {
     ui.getListOfBoats(member, member.getBoats());
     ui.chooseBoat();
     return ui.readInputInt();
   }
 
-  private void b_remove(MemberRegistry reg, ConsoleUi ui) throws MemberNotFound {
+  /**
+   * Method to delete one boat.
+   * 
+   */
+  private void removeBoat(MemberRegistry reg, ConsoleUi ui) throws MemberNotFound {
     ui.deleteBoat();
     // Show a list of members and select a specific member
     ui.showCompactList(reg.getMembers());
@@ -253,8 +296,8 @@ public class BoatClubController {
           }
           // Select boat
           int boatId = getBoatId(ui, m);
-          for(int i = 0; i < m.getNumberOfBoats(); i++) {
-            if(m.getOneBoat(i).getBoatId() == boatId) {
+          for (int i = 0; i < m.getNumberOfBoats(); i++) {
+            if (m.getOneBoat(i).getBoatId() == boatId) {
               m.deleteBoat(i);
               ui.proceedSucessful();
             }
