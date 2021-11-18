@@ -15,7 +15,7 @@ public class FileHandler implements IdataStorage {
   private String fileName = "MemberData.json";
 
   @Override
-  public ArrayList<Member> readFromFile() throws JsonProcessingException, IOException {
+  public ArrayList<Member> checkAllMembers() throws JsonProcessingException, IOException {
     ObjectMapper mapper = new ObjectMapper();
     Member[] members = mapper.readValue(Paths.get(fileName).toFile(), Member[].class);
     if (members == null) {
@@ -25,7 +25,7 @@ public class FileHandler implements IdataStorage {
   }
 
   @Override
-  public void saveToFile(ArrayList<Member> members) throws IOException {
+  public void saveMembers(ArrayList<Member> members) throws IOException {
     ObjectMapper mapper = new ObjectMapper();
     ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
     writer.writeValue(Paths.get(fileName).toFile(), members);

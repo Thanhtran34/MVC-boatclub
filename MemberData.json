@@ -1,35 +1,23 @@
 [ {
-  "name" : "thanh",
-  "memberId" : "546340",
-  "personalNumber" : "198606308644",
-  "boats" : [ {
-    "owner" : "546340",
-    "lengthInMeters" : 1.3716000000000002,
-    "boatId" : 1007,
-    "type" : "Motorsailer",
-    "length" : 4.5
-  }, {
-    "owner" : "546340",
-    "lengthInMeters" : 0.70104,
-    "boatId" : 1260,
-    "type" : "Sailboat",
-    "length" : 2.3
-  } ]
-}, {
   "name" : "Tam",
   "memberId" : "8e147f",
   "personalNumber" : "200003025644",
   "boats" : [ {
     "owner" : "8e147f",
-    "lengthInMeters" : 1.70688,
-    "boatId" : 1009,
-    "type" : "KayakCanoe",
-    "length" : 5.6
-  }, {
-    "owner" : "8e147f",
-    "lengthInMeters" : 1.3716000000000002,
-    "boatId" : 1032,
+    "lengthInMeters" : 0.36576000000000003,
+    "boatId" : 3657,
+    "type" : "Other",
+    "length" : 1.2
+  } ]
+}, {
+  "name" : "ThanhTran",
+  "memberId" : "280088",
+  "personalNumber" : "200302031233",
+  "boats" : [ {
+    "owner" : "280088",
+    "lengthInMeters" : 2.34696,
+    "boatId" : 3021,
     "type" : "Sailboat",
-    "length" : 4.5
+    "length" : 7.7
   } ]
 } ]

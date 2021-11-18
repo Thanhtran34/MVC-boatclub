@@ -38,7 +38,7 @@ public class ConsoleUi {
    * Method to get user input.
    * 
    */
-  public Actions showMainMenu() throws InvalidInput{
+  public Actions showMainMenu() throws InvalidInput {
     this.showWelcomeMessage();
     System.out.println("!**** MAIN MENU ****!");
     System.out.println("-----------------------");

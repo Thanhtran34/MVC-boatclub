@@ -11,7 +11,6 @@ public class App {
     ConsoleUi ui = new ConsoleUi();
     BoatClubController controller = new BoatClubController();
 
-    // c.doSomethingSimple(m, v);
     controller.doMainMenu(reg, ui);
   }
 }

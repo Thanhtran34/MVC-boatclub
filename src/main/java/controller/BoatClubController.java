@@ -72,15 +72,18 @@ public class BoatClubController {
   }
 
   /** Method to register a member. */
-  private void registerMember(MemberRegistry reg, ConsoleUi ui) throws DuplicationFound {
+  private void registerMember(MemberRegistry reg, ConsoleUi ui)
+      throws DuplicationFound, InvalidInput {
     ui.chooseName();
     String name = ui.readUserInput();
     ui.choosePersonalNo();
     String pnr = ui.readUserInput();
-    if (!name.equals(null) && !pnr.equals(null)) {
-      reg.registerMember(name, pnr);
+    if (pnr.matches("\\d+") && pnr.length() == 12) {
+      reg.addMember(name, pnr);
+      ui.saveSuccessful();
+    } else {
+      throw new InvalidInput("Wrong format of personal number!");
     }
-    ui.saveSuccessful();
   }
 
   /** Method to view one member. */
@@ -102,7 +105,7 @@ public class BoatClubController {
   }
 
   /** Method to update one member. */
-  private void editMember(MemberRegistry reg, ConsoleUi ui) {
+  private void editMember(MemberRegistry reg, ConsoleUi ui) throws InvalidInput {
     ui.updateMember();
     // Show a list of members and select a specific member
     ui.showCompactList(reg.getMembers());
@@ -113,16 +116,15 @@ public class BoatClubController {
         // Update member
         ui.chooseName();
         String newName = ui.readUserInput();
-        m.setName(newName);
         ui.choosePersonalNo();
         String newPnr = ui.readUserInput();
-        m.setPersonalNumber(newPnr);
-        if (!newName.equals(null) && !newPnr.equals(null)) {
+        if (newPnr.matches("\\d+") && newPnr.length() == 12) {
+          m.setName(newName);
+          m.setPersonalNumber(newPnr);
           ui.saveSuccessful();
+        } else {
+          throw new InvalidInput("Wrong format of personal number!");
         }
-      }
-      if (reg.isMemberExist(memberId) == false) {
-        throw new MemberNotFound("Member is not found!");
       }
     }
   }
@@ -136,11 +138,8 @@ public class BoatClubController {
     String id = ui.readUserInput();
     for (int i = 0; i < reg.getMemberCount(); i++) {
       if (reg.getMembers().get(i).getMemberId().equals(id)) {
-        reg.deleteMember(i);
+        reg.removeMember(i);
         ui.proceedSucessful();
-      }
-      if (reg.isMemberExist(id) == false) {
-        throw new MemberNotFound("Member is not found!");
       }
     }
   }
@@ -214,9 +213,6 @@ public class BoatClubController {
     ui.showCompactList(reg.getMembers());
     ui.chooseMemberId();
     String memberId = ui.readUserInput();
-    if (reg.isMemberExist(memberId) == false) {
-      throw new MemberNotFound("Member is not found!");
-    }
     if (this.validMemberId(memberId, reg)) {
       for (Member m : reg.getMembers()) {
         if (m.getMemberId().equals(memberId)) {
@@ -259,9 +255,6 @@ public class BoatClubController {
     ui.showCompactList(reg.getMembers());
     ui.chooseMemberId();
     String memberId = ui.readUserInput();
-    if (reg.isMemberExist(memberId) == false) {
-      throw new MemberNotFound("Member is not found!");
-    }
     if (this.validMemberId(memberId, reg)) {
 
       for (Member m : reg.getMembers()) {
@@ -282,7 +275,6 @@ public class BoatClubController {
         }
       }
     } else {
-
       // Member not found
       throw new MemberNotFound("Member is not found!");
     }

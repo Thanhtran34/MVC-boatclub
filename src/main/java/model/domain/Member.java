@@ -75,6 +75,10 @@ public class Member {
     boatList.remove(idx);
   }
 
+  /**
+   * Method to check if the boat exist or not.
+   * 
+   */
   public boolean isBoatExist(int id) {
     for (Boat b : boatList) {
       if (b.getBoatId() == id) {

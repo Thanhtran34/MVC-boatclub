@@ -18,12 +18,12 @@ public class MemberRegistry {
   }
 
   public ArrayList<Member> readData() throws IOException {
-    this.members = data.readFromFile();
+    this.members = data.checkAllMembers();
     return this.members;
   }
 
   public void saveDataToRegistry() throws IOException {
-    data.saveToFile(members);
+    data.saveMembers(members);
   }
 
   /**
@@ -36,7 +36,7 @@ public class MemberRegistry {
   }
 
   /** Creates a new member and adds it to the registry. A unique member id is assigned. */
-  public void registerMember(String name, String pnr) throws DuplicationFound {
+  public void addMember(String name, String pnr) throws DuplicationFound {
     MemberId id = new MemberId();
     Member m = new Member(name, pnr, id.getId());
     if (!notUniqueMemberId(m.getMemberId())) {
@@ -66,7 +66,7 @@ public class MemberRegistry {
   }
 
   /** Removes a member from the registry. */
-  public void deleteMember(int idx) throws MemberNotFound {
+  public void removeMember(int idx) throws MemberNotFound {
     this.members.remove(idx);
   }
 

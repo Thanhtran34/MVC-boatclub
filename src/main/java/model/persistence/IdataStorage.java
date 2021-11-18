@@ -6,7 +6,7 @@ import model.domain.Member;
 
 /** An interface for accessing and storing member's data. */
 public interface IdataStorage {
-  ArrayList<Member> readFromFile() throws IOException;
+  ArrayList<Member> checkAllMembers() throws IOException;
 
-  void saveToFile(ArrayList<Member> members) throws IOException;
+  void saveMembers(ArrayList<Member> members) throws IOException;
 }
