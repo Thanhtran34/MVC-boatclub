@@ -168,7 +168,7 @@ public class BoatClubController {
             }
           }
           // register boat to its owner
-          m.registerBoat(memberId, type, boatLength);
+          m.addBoat(memberId, type, boatLength);
           ui.proceedSucessful();
         }
       }
@@ -224,10 +224,9 @@ public class BoatClubController {
           int boatId = this.getBoatId(ui, m);
           for (Boat b : m.getBoats()) {
             if (b.getBoatId() == boatId) {
-              b.setType(this.getBoatTypes(ui));
               ui.chooseBoatLength();
               double boatLength = ui.readInputDoub();
-              b.setLength(boatLength);
+              m.editBoat(boatLength,this.getBoatTypes(ui), b);
               ui.proceedSucessful();
             }
           }
@@ -268,7 +267,7 @@ public class BoatClubController {
           int boatId = getBoatId(ui, m);
           for (int i = 0; i < m.getNumberOfBoats(); i++) {
             if (m.getOneBoat(i).getBoatId() == boatId) {
-              m.deleteBoat(i);
+              m.removeBoat(i);
               ui.proceedSucessful();
             }
           }

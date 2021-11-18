@@ -5,12 +5,12 @@ import exception.MemberNotFound;
 import java.io.IOException;
 import java.util.ArrayList;
 import model.persistence.FileHandler;
-import model.persistence.IdataStorage;
+import model.persistence.DataStorage;
 
 /** A class for CRUD functions with member's data and check if id is unique. */
 public class MemberRegistry {
   private ArrayList<Member> members = new ArrayList<>();
-  private IdataStorage data;
+  private DataStorage data;
 
   /** Initializing constructor. */
   public MemberRegistry() {

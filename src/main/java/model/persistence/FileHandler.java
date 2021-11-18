@@ -11,7 +11,7 @@ import java.util.Arrays;
 import model.domain.Member;
 
 /** The FileHandler class to read and save data to file. */
-public class FileHandler implements IdataStorage {
+public class FileHandler implements DataStorage {
   private String fileName = "MemberData.json";
 
   @Override

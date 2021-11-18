@@ -15,9 +15,9 @@
   "personalNumber" : "200302031233",
   "boats" : [ {
     "owner" : "280088",
-    "lengthInMeters" : 2.34696,
+    "lengthInMeters" : 1.09728,
     "boatId" : 3021,
-    "type" : "Sailboat",
-    "length" : 7.7
+    "type" : "KayakCanoe",
+    "length" : 3.6
   } ]
 } ]

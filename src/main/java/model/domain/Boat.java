@@ -47,16 +47,16 @@ public class Boat {
     this.lengthInFeet = length;
   }
 
+  public BoatType getType() {
+    return type;
+  }
+
   public void setType(BoatType type) {
     this.type = type;
   }
 
   public int getBoatId() {
     return boatId;
-  }
-
-  public BoatType getType() {
-    return type;
   }
 
   /** Method to get length in meters. */

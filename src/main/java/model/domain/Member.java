@@ -61,17 +61,17 @@ public class Member {
     return boatList.get(position);
   }
 
-  public void registerBoat(String owner, BoatType type, double lengthInFeet) {
+  public void addBoat(String owner, BoatType type, double lengthInFeet) {
     Boat boat = new Boat(owner, type, lengthInFeet);
     boatList.add(boat);
   }
 
-  public void updateBoat(double length, BoatType type, Boat boat) {
+  public void editBoat(double length, BoatType type, Boat boat) {
     boat.setLength(length);
     boat.setType(type);
   }
 
-  public void deleteBoat(int idx) throws BoatNotFound {
+  public void removeBoat(int idx) throws BoatNotFound {
     boatList.remove(idx);
   }
 
