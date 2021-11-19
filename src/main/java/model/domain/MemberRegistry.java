@@ -4,8 +4,8 @@ import exception.DuplicationFound;
 import exception.MemberNotFound;
 import java.io.IOException;
 import java.util.ArrayList;
-import model.persistence.FileHandler;
 import model.persistence.DataStorage;
+import model.persistence.FileHandler;
 
 /** A class for CRUD functions with member's data and check if id is unique. */
 public class MemberRegistry {

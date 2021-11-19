@@ -144,7 +144,7 @@ public class ConsoleUi {
    * Method to show list of boats.
    * 
    */
-  public void getListOfBoats(Member m, Iterable<Boat> boats) {
+  public void getListOfBoats(Member m, ArrayList<Boat> boats) {
     if (m.getNumberOfBoats() == 0) {
       this.noBoats();
     } else {
@@ -203,6 +203,25 @@ public class ConsoleUi {
       compactList.append("===================================\n");
     }
     System.out.println(compactList);
+  }
+
+  /** Method to show type of boat. */
+  public Boat.BoatType showBoatTypes() {
+    this.chooseBoatType();
+    int counter = 1;
+    for (Boat.BoatType type : Boat.BoatType.values()) {
+      this.printMessage(counter + ". " + type.toString());
+      counter++;
+    }
+
+    counter = this.readInputInt() - 1;
+
+    // Preventing wrong choice for boat type
+    if (counter > 3) {
+      counter = 0;
+    }
+
+    return Boat.BoatType.values()[counter];
   }
 
   public void lookForOneMember() {

@@ -156,7 +156,7 @@ public class BoatClubController {
     }
     if (this.validMemberId(memberId, reg)) {
       // Check boat information
-      Boat.BoatType type = this.getBoatTypes(ui);
+      Boat.BoatType type = ui.showBoatTypes();
       ui.chooseBoatLength();
       double boatLength = ui.readInputDoub();
       for (Member m : reg.getMembers()) {
@@ -187,25 +187,6 @@ public class BoatClubController {
     return !valid;
   }
 
-  /** Method to get type of boat. */
-  private Boat.BoatType getBoatTypes(ConsoleUi ui) {
-    ui.chooseBoatType();
-    int counter = 1;
-    for (Boat.BoatType type : Boat.BoatType.values()) {
-      ui.printMessage(counter + ". " + type.toString());
-      counter++;
-    }
-
-    counter = ui.readInputInt() - 1;
-
-    // Preventing wrong choice for boat type
-    if (counter > 3) {
-      counter = 0;
-    }
-
-    return Boat.BoatType.values()[counter];
-  }
-
   /** Method to update one boat. */
   private void editBoat(MemberRegistry reg, ConsoleUi ui) {
     ui.updateBoat();
@@ -226,7 +207,7 @@ public class BoatClubController {
             if (b.getBoatId() == boatId) {
               ui.chooseBoatLength();
               double boatLength = ui.readInputDoub();
-              m.editBoat(boatLength,this.getBoatTypes(ui), b);
+              m.editBoat(boatLength, ui.showBoatTypes(), b);
               ui.proceedSucessful();
             }
           }

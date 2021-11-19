@@ -5,8 +5,8 @@
   "boats" : [ {
     "owner" : "8e147f",
     "lengthInMeters" : 0.36576000000000003,
-    "boatId" : 3657,
-    "type" : "Other",
+    "boatId" : 2177,
+    "type" : "Motorsailer",
     "length" : 1.2
   } ]
 }, {
@@ -15,9 +15,9 @@
   "personalNumber" : "200302031233",
   "boats" : [ {
     "owner" : "280088",
-    "lengthInMeters" : 1.09728,
+    "lengthInMeters" : 1.6764000000000001,
     "boatId" : 3021,
-    "type" : "KayakCanoe",
-    "length" : 3.6
+    "type" : "Sailboat",
+    "length" : 5.5
   } ]
 } ]
