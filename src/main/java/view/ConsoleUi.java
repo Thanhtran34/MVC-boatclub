@@ -210,7 +210,7 @@ public class ConsoleUi {
     this.chooseBoatType();
     int counter = 1;
     for (Boat.BoatType type : Boat.BoatType.values()) {
-      this.printMessage(counter + ". " + type.toString());
+      System.out.println(counter + ". " + type.toString());
       counter++;
     }
 
@@ -288,10 +288,6 @@ public class ConsoleUi {
     } catch (NumberFormatException | NullPointerException e) {
       return 0;
     }
-  }
-
-  public void printMessage(String message) {
-    System.out.println(message);
   }
 
   public void proceedSucessful() {
