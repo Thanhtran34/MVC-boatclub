@@ -10,14 +10,14 @@
     "length" : 1.2
   } ]
 }, {
-  "name" : "John",
-  "memberId" : "280088",
-  "personalNumber" : "197505087899",
+  "name" : "Tommy Lee",
+  "memberId" : "61f742",
+  "personalNumber" : "200008077899",
   "boats" : [ {
-    "owner" : "280088",
-    "lengthInMeters" : 1.34112,
-    "boatId" : 3021,
-    "type" : "KayakCanoe",
-    "length" : 4.4
+    "owner" : "61f742",
+    "lengthInMeters" : 1.7983200000000001,
+    "boatId" : 3286,
+    "type" : "Sailboat",
+    "length" : 5.9
   } ]
 } ]
