@@ -1,7 +1,7 @@
 [ {
-  "name" : "Tam",
+  "name" : "Mats",
   "memberId" : "8e147f",
-  "personalNumber" : "200003025644",
+  "personalNumber" : "199905024566",
   "boats" : [ {
     "owner" : "8e147f",
     "lengthInMeters" : 0.36576000000000003,
@@ -10,14 +10,14 @@
     "length" : 1.2
   } ]
 }, {
-  "name" : "ThanhTran",
+  "name" : "John",
   "memberId" : "280088",
-  "personalNumber" : "200302031233",
+  "personalNumber" : "197505087899",
   "boats" : [ {
     "owner" : "280088",
-    "lengthInMeters" : 1.6764000000000001,
+    "lengthInMeters" : 1.34112,
     "boatId" : 3021,
-    "type" : "Sailboat",
-    "length" : 5.5
+    "type" : "KayakCanoe",
+    "length" : 4.4
   } ]
 } ]
